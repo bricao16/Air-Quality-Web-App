@@ -1,36 +1,39 @@
 <!DOCTYPE html>
-
 <html>
-	<title>
-		Air Quality App by Mike Hawkins and Brain Cao
-	</title>
+   <head>
+      <title>Air Quality Map by Brian Cao and Mike Hawkins</title>
+      <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+      <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+   </head>
 
-	<head>
-		 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-		   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-	   	   crossorigin=""/>
+   <body>
+      <div id = "map" style = "width: 700px; height: 600px; position: absolute; right: 30px; top: 100px; border: 3px solid #73AD21;"></div>
+      <div id = "map2" style = "width: 700px; height: 600px; position: absolute; left: 30px; top: 100px; border: 3px solid #73AD21;"></div>
+      <script>
 
-	   	 <!-- Make sure you put this AFTER Leaflet's CSS -->
-		 <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-		      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-   			  crossorigin=""></script>
-	</head>
+         //make options
+         var mapOptions = {
+            center: [44.9537, -93.0900],
+            zoom: 10
+         }
+         var mapOptions2 = {
+		 	center: [44.9537, -93.0900],
+		    zoom: 10
+         }
 
-	<body>
-		<div id = "mapid">
-		</div>
-	</body>
+         //make objects
+         var map = new L.map('map', mapOptions);
+         var map2 = new L.map('map2', mapOptions2);
 
-	<script>
+         // Creating a Layer object
+         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         var layer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
-		var map = L.map('mapid').setView([44.9537, -93.09], 13);
+         // Adding layer to the map
+         map.addLayer(layer);
+         map2.addLayer(layer2);
 
-		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a><a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			maxZoom: 18,
-			id: mapid,
-			accessToken: 'hawkcao'
-		}).addTo(map);
+      </script>
+   </body>
 
-	</script>
 </html>
