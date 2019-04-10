@@ -8,22 +8,30 @@
    </head>
 
    <body>
-      <div id = "map" style = "width: 47.5%; height: 85%; position: fixed; right: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
-      <div id = "map2" style = "width: 47.5%; height: 85%; position: fixed; left: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
-      <form>
-	    	Latitude:
+      <div id = "map" style = "width: 47.5%; height: 75%; position: fixed; right: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
+      <div id = "map2" style = "width: 47.5%; height: 75%; position: fixed; left: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
+      <div id = "div1" style = "float: left; padding-left: 1.5rem;">
+	  <form>
+	    	Latitude: 
 			<input type="text" name="lat1" value="44.9537" display: inline; style = position: fixed; left: 1 rem; top: .5rem;>
+			<br>
 			Longitude:
 			<input type="text" name="lon1" value="-93.0900" display: inline; style = position: fixed; left: 1 rem;>
+			<br>
 			<input type="submit" value="Submit">
 	  </form>
+	  </div>
+	   <div id = "div2" style = "float: right; padding-right: 24.0rem;">
 	  <form>
 	  	    Latitude:
 		    <input type="text" name="lat2" value="44.9537" display: inline;  style = position: fixed; right: 5rem; top: .5rem;>
+			<br>
 		    Longitude:
 		    <input type="text" name="lon2" value="-93.0900" display: inline;  style = position: fixed; right: 5rem;>
+			<br>
 		    <input type="submit" value="Submit">
 	  </form>
+	  </div>
       <script>
 
          //make options
@@ -51,4 +59,4 @@
       </script>
    </body>
 
-</html>
+</html>	
