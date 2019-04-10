@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
    <head>
+   	  <!-- <p>AIR QUALITY MAP</p> -->
       <title>Air Quality Map by Brian Cao and Mike Hawkins</title>
       <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
       <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
    </head>
 
    <body>
-      <div id = "map" style = "width: 700px; height: 600px; position: absolute; right: 30px; top: 100px; border: 3px solid #73AD21;"></div>
-      <div id = "map2" style = "width: 700px; height: 600px; position: absolute; left: 30px; top: 100px; border: 3px solid #73AD21;"></div>
+      <div id = "map" style = "width: 43.75rem; height: 37.5rem; position: fixed; right: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
+      <div id = "map2" style = "width: 43.75rem; height: 37.5rem; position: fixed; left: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
+      <form>
+	    	Latitude:
+			<input type="text" name="lat1" value="44.9537" style = position: fixed; left: 1 rem; top: .5rem;><br>
+			Longitude:
+			<input type="text" name="lon1" value="-93.0900" style = position: fixed; left: 1 rem;><br>
+			<input type="submit" value="Submit">
+	  </form>
+	  <form>
+	  	    Latitude:
+		    <input type="text" name="lat2" value="44.9537" style = position: fixed; right: 5rem; top: .5rem;><br>
+		    Longitude:
+		    <input type="text" name="lon2" value="-93.0900" style = position: fixed; right: 5rem;><br>
+		    <input type="submit" value="Submit">
+	  </form>
       <script>
 
          //make options
