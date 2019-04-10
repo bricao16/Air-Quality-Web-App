@@ -5,6 +5,13 @@
       <title>Air Quality Map by Brian Cao and Mike Hawkins</title>
       <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
       <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script>
+      		var lat1_val = 44.9537;
+      		var lon1_val = -93.0900;
+      		var lat2_val = 44.9537;
+      		var lon2_val = -93.0900;
+      </script>
    </head>
 
    <body>
@@ -12,35 +19,33 @@
       <div id = "map2" style = "width: 47.5%; height: 75%; position: fixed; left: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
       <div id = "div1" style = "float: left; padding-left: 1.5rem;">
 	  <form>
-	    	Latitude: 
-			<input type="text" name="lat1" value="44.9537" display: inline; style = position: fixed; left: 1 rem; top: .5rem;>
+	    	Latitude:
+			<input type="text" id = "lat1" name="lat1" value= "44.9537" display: inline; style = position: fixed; left: 1 rem; top: .5rem;>
 			<br>
 			Longitude:
-			<input type="text" name="lon1" value="-93.0900" display: inline; style = position: fixed; left: 1 rem;>
+			<input type="text" id = "lon1" name="lon1" value="-93.0900" display: inline; style = position: fixed; left: 1 rem;>
 			<br>
-			<input type="submit" value="Submit">
+			<button onclick = "update1()">Submit</button>
 	  </form>
 	  </div>
 	   <div id = "div2" style = "float: right; padding-right: 24.0rem;">
 	  <form>
 	  	    Latitude:
-		    <input type="text" name="lat2" value="44.9537" display: inline;  style = position: fixed; right: 5rem; top: .5rem;>
+		    <input type="text" id = "lat2" name="lat2" value="44.9537" display: inline;  style = position: fixed; right: 5rem; top: .5rem;>
 			<br>
 		    Longitude:
-		    <input type="text" name="lon2" value="-93.0900" display: inline;  style = position: fixed; right: 5rem;>
+		    <input type="text" id = "lon2" name="lon2" value="-93.0900" display: inline;  style = position: fixed; right: 5rem;>
 			<br>
-		    <input type="submit" value="Submit">
+		    <button onclick = "update2()">Submit</button>
 	  </form>
 	  </div>
       <script>
-
-         //make options
          var mapOptions = {
-            center: [44.9537, -93.0900],
+            center: [lat1_val,lon1_val],
             zoom: 10
          }
          var mapOptions2 = {
-		 	center: [44.9537, -93.0900],
+		 	center: [lat2_val,lon2_val],
 		    zoom: 10
          }
 
@@ -56,7 +61,17 @@
          map.addLayer(layer);
          map2.addLayer(layer2);
 
+		 function update1()
+		 {
+			 document.getElementById("lat1").value = $("lat1").val();
+			 document.getElementById("lon1").value = $("lon1").val();
+		 }
+		 function update2()
+		 {
+			 document.getElementById("lat2").value = $("lat2").val();
+			 document.getElementById("lon2").value = $("lon2").val();
+		 }
       </script>
    </body>
 
-</html>	
+</html>
