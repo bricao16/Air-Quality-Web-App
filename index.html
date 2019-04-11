@@ -19,11 +19,11 @@
 				<div class ="six columns" style = "background: yellow; float: left;   " onmouseup = "getCenter1()">
 						<p style = "float: left; min-height: 70%;">
 							Latitude:
-							<input type="text" id = "lat1" name="lat1" onchange ="saveLat1()">
+							<input type="text" id = "lat1" name="lat1" value = "44.9537" onchange ="saveLat1()" onmouseup = "getCenter1()">
 
 							<br>
 							Longitude:
-							<input type="text" id = "lon1" name="lon1" onchange ="saveLon1()" >
+							<input type="text" id = "lon1" name="lon1" value = "-93.0900" onchange ="saveLon1()" onmouseup = "getCenter1()">
 							<br>
 							<button onclick = "update1()">Submit</button>
 							<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;"></div>
@@ -33,10 +33,10 @@
 				<div class ="six columns" style = "background: green; float: left; "onmouseup = "getCenter2()">
 						<p style = " min-height: 50%;">
 							Latitude:
-							<input type="text" id = "lat2" name="lat2" onchange ="saveLat2()">
+							<input type="text" id = "lat2" name="lat2" value = "44.9537" onchange ="saveLat2()" onmouseup = "getCenter1()">
 							<br>
 							Longitude:
-							<input type="text" id = "lon2" name="lon2" onchange ="saveLon2()" >
+							<input type="text" id = "lon2" name="lon2" value = "-93.0900" onchange ="saveLon2()" onmouseup = "getCenter1()">
 							<br>
 							<button onclick = "update2()">Submit</button>
 							<div id = "map2" style = "padding-bottom: 50%; width: 75%; height: 75%;  border: 3px solid #73AD21;"></div>
@@ -62,55 +62,71 @@
 
 		 //console.log(#lat1);
 		console.log(lat1);
-		function saveLat1()
+		function saveLat1(x)
 		{
-			var lat_1=document.getElementById("lat1").value;
-			return lat_1;
+			if (x == undefined) {
+				var lat_1=document.getElementById("lat1").value;
+				return lat_1;
+			}
+			else{
+				return map.getCenter().lat;
+			}
 		}
-		function saveLon1()
+		function saveLon1(x)
 		{
-			var lon_1=document.getElementById("lon1").value;
-			return lon_1;
+			if (x == undefined) {
+				var lon_1=document.getElementById("lon1").value;
+				return lon_1;
+			}
+			else{
+				return map.getCenter().lng;
+			}
 		}
-		function saveLat2()
+		function saveLat2(x)
 		{
-			var lat_2=document.getElementById("lat2").value;
-			return lat_2;
+			if (x == undefined) {
+				var lat_2=document.getElementById("lat2").value;
+				return lat_2;
+			}
+			else{
+				return map2.getCenter().lat;
+			}
 		}
-		function saveLon2()
+		function saveLon2(x)
 		{
-			var lon_2=document.getElementById("lon2").value;
-			return lon_2;
+			if (x == undefined) {
+				var lon_2=document.getElementById("lon2").value;
+				return lon_2;
+			}
+			else{
+				return map2.getCenter().lng;
+			}
 		}
 		 function update1()
 		 {
 				map.remove();
-				var newMap1 = new L.map('map').setView([saveLat1(), saveLon1()], 5);
+				map = new L.map('map').setView([saveLat1(), saveLon1()], 5);
 				var newLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-				newMap1.addLayer(newLayer);
+				map.addLayer(newLayer);
 		 }
 		 function update2()
 		 {
 				map2.remove();
-				var newMap2 = new L.map('map2').setView([saveLat2(), saveLon2()], 5);
+				map2 = new L.map('map2').setView([saveLat2(), saveLon2()], 5);
 				var newLayer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-				newMap2.addLayer(newLayer2);
+				map2.addLayer(newLayer2);
 		 }
 		 function getCenter1()
 		 {
-		 	console.log("center 1 called");
-		 	cent_lat1 = map.getCenter();
-		 	console.log(cent_lat1);
-		 	cent_lon1 = map.getCenter();
+		 	saveLat1(1);
+		 	saveLon1(1);
 		 }
 		 function getCenter2()
 		 {
-		 	console.log("center 2 called");
-		 	cent_lat2 = map2.getCenter();
-		 	console.log(cent_lat2);
-		 	cent_lon2 = map2.getCenter();
+		 	saveLat2(1);
+		 	console.log(saveLat2(1));
+		 	saveLon2(1);
 		 }
-		 //onmouseup="map.getCenter()"
       </script>
    </body>
 
