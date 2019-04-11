@@ -4,73 +4,113 @@
    	  <!-- <p>AIR QUALITY MAP</p> -->
       <title>Air Quality Map by Brian Cao and Mike Hawkins</title>
       <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+      <link rel = "stylesheet" href = "normalize.css"/>
+      <link rel = "stylesheet" href = "skeleton.css"/>
+
       <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-      <script>
-      		var lat1_val = 44.9537;
-      		var lon1_val = -93.0900;
-      		var lat2_val = 44.9537;
-      		var lon2_val = -93.0900;
-      </script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
    </head>
 
    <body>
-      <div id = "map" style = "width: 47.5%; height: 75%; position: fixed; right: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
-      <div id = "map2" style = "width: 47.5%; height: 75%; position: fixed; left: 1.875rem; top: 6.25rem; border: 3px solid #73AD21;"></div>
-      <div id = "div1" style = "float: left; padding-left: 1.5rem;">
-	  <form>
-	    	Latitude:
-			<input type="text" id = "lat1" name="lat1" value= "44.9537" display: inline; style = position: fixed; left: 1 rem; top: .5rem;>
-			<br>
-			Longitude:
-			<input type="text" id = "lon1" name="lon1" value="-93.0900" display: inline; style = position: fixed; left: 1 rem;>
-			<br>
-			<button onclick = "update1()">Submit</button>
-	  </form>
-	  </div>
-	   <div id = "div2" style = "float: right; padding-right: 24.0rem;">
-	  <form>
-	  	    Latitude:
-		    <input type="text" id = "lat2" name="lat2" value="44.9537" display: inline;  style = position: fixed; right: 5rem; top: .5rem;>
-			<br>
-		    Longitude:
-		    <input type="text" id = "lon2" name="lon2" value="-93.0900" display: inline;  style = position: fixed; right: 5rem;>
-			<br>
-		    <button onclick = "update2()">Submit</button>
-	  </form>
-	  </div>
+
+	   <div class ="container">
+			<div class ="row" style = "background: red;">
+				<div class ="six columns" style = "background: yellow; float: left;   " onmouseup = "getCenter1()">
+						<p style = "float: left; min-height: 70%;">
+							Latitude:
+							<input type="text" id = "lat1" name="lat1" onchange ="saveLat1()">
+
+							<br>
+							Longitude:
+							<input type="text" id = "lon1" name="lon1" onchange ="saveLon1()" >
+							<br>
+							<button onclick = "update1()">Submit</button>
+							<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;"></div>
+
+						</p>
+				</div>
+				<div class ="six columns" style = "background: green; float: left; "onmouseup = "getCenter2()">
+						<p style = " min-height: 50%;">
+							Latitude:
+							<input type="text" id = "lat2" name="lat2" onchange ="saveLat2()">
+							<br>
+							Longitude:
+							<input type="text" id = "lon2" name="lon2" onchange ="saveLon2()" >
+							<br>
+							<button onclick = "update2()">Submit</button>
+							<div id = "map2" style = "padding-bottom: 50%; width: 75%; height: 75%;  border: 3px solid #73AD21;"></div>
+						</p>
+				</div>
+
+			</div>
+		</div>
       <script>
-         var mapOptions = {
-            center: [lat1_val,lon1_val],
-            zoom: 10
-         }
-         var mapOptions2 = {
-		 	center: [lat2_val,lon2_val],
-		    zoom: 10
-         }
 
          //make objects
-         var map = new L.map('map', mapOptions);
-         var map2 = new L.map('map2', mapOptions2);
-
+         var map = new L.map('map').setView([44.9537,-93.0900], 10);
+         var map2 = new L.map('map2').setView([44.9537,-93.0900], 10);
          // Creating a Layer object
          var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
          var layer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-
          // Adding layer to the map
          map.addLayer(layer);
          map2.addLayer(layer2);
+         //event listening?
+         //map.onmouseup = getCenter1();
+         //map2.onmouseup = getCenter2();
 
+		 //console.log(#lat1);
+		console.log(lat1);
+		function saveLat1()
+		{
+			var lat_1=document.getElementById("lat1").value;
+			return lat_1;
+		}
+		function saveLon1()
+		{
+			var lon_1=document.getElementById("lon1").value;
+			return lon_1;
+		}
+		function saveLat2()
+		{
+			var lat_2=document.getElementById("lat2").value;
+			return lat_2;
+		}
+		function saveLon2()
+		{
+			var lon_2=document.getElementById("lon2").value;
+			return lon_2;
+		}
 		 function update1()
 		 {
-			 document.getElementById("lat1").value = $("lat1").val();
-			 document.getElementById("lon1").value = $("lon1").val();
+				map.remove();
+				var newMap1 = new L.map('map').setView([saveLat1(), saveLon1()], 5);
+				var newLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+				newMap1.addLayer(newLayer);
 		 }
 		 function update2()
 		 {
-			 document.getElementById("lat2").value = $("lat2").val();
-			 document.getElementById("lon2").value = $("lon2").val();
+				map2.remove();
+				var newMap2 = new L.map('map2').setView([saveLat2(), saveLon2()], 5);
+				var newLayer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+				newMap2.addLayer(newLayer2);
 		 }
+		 function getCenter1()
+		 {
+		 	console.log("center 1 called");
+		 	cent_lat1 = map.getCenter();
+		 	console.log(cent_lat1);
+		 	cent_lon1 = map.getCenter();
+		 }
+		 function getCenter2()
+		 {
+		 	console.log("center 2 called");
+		 	cent_lat2 = map2.getCenter();
+		 	console.log(cent_lat2);
+		 	cent_lon2 = map2.getCenter();
+		 }
+		 //onmouseup="map.getCenter()"
       </script>
    </body>
 
