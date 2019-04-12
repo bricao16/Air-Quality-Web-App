@@ -6,7 +6,7 @@
       <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
       <link rel = "stylesheet" href = "normalize.css"/>
       <link rel = "stylesheet" href = "skeleton.css"/>
-
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
@@ -16,30 +16,30 @@
 
 	   <div class ="container">
 			<div class ="row" style = "background: red;">
-				<div class ="six columns" style = "background: yellow; float: left;   " onmouseup = "getCenter1()">
+				<div class ="six columns" style = "background: yellow; float: left;   ">
 						<p style = "float: left; min-height: 70%;">
 							Latitude:
-							<input type="text" id = "lat1" name="lat1" value = "44.9537" onchange ="saveLat1()" onmouseup = "getCenter1()">
+							<input type="text" id = "lat1" name="lat1"  onchange ="saveLat1()">
 
 							<br>
 							Longitude:
-							<input type="text" id = "lon1" name="lon1" value = "-93.0900" onchange ="saveLon1()" onmouseup = "getCenter1()">
+							<input type="text" id = "lon1" name="lon1"   onchange ="saveLon1()">
 							<br>
 							<button onclick = "update1()">Submit</button>
-							<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;"></div>
+							<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;" onmouseup = "getCenter1()"></div>
 
 						</p>
 				</div>
-				<div class ="six columns" style = "background: green; float: left; "onmouseup = "getCenter2()">
+				<div class ="six columns" style = "background: green; float: left; ">
 						<p style = " min-height: 50%;">
 							Latitude:
-							<input type="text" id = "lat2" name="lat2" value = "44.9537" onchange ="saveLat2()" onmouseup = "getCenter1()">
+							<input type="text" id = "lat2" name="lat2"  onchange ="saveLat2()" >
 							<br>
 							Longitude:
-							<input type="text" id = "lon2" name="lon2" value = "-93.0900" onchange ="saveLon2()" onmouseup = "getCenter1()">
+							<input type="text" id = "lon2" name="lon2"   onchange ="saveLon2()" >
 							<br>
 							<button onclick = "update2()">Submit</button>
-							<div id = "map2" style = "padding-bottom: 50%; width: 75%; height: 75%;  border: 3px solid #73AD21;"></div>
+							<div id = "map2" style = "padding-bottom: 50%; width: 75%; height: 75%;  border: 3px solid #73AD21;" onmouseup = "getCenter2()"></div>
 						</p>
 				</div>
 
@@ -48,8 +48,8 @@
       <script>
 
          //make objects
-         var map = new L.map('map').setView([44.9537,-93.0900], 10);
-         var map2 = new L.map('map2').setView([44.9537,-93.0900], 10);
+         var map = new L.map('map', {minZoom: 9, maxZoom: 16}).setView([44.9537,-93.0900], 10);
+         var map2 = new L.map('map2', {minZoom: 9, maxZoom: 16}).setView([44.9537,-93.0900], 10	);
          // Creating a Layer object
          var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
          var layer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
@@ -66,7 +66,9 @@
 		{
 			if (x == undefined) {
 				var lat_1=document.getElementById("lat1").value;
+						
 				return lat_1;
+
 			}
 			else{
 				return map.getCenter().lat;
@@ -104,28 +106,30 @@
 		}
 		 function update1()
 		 {
-				map.remove();
-				map = new L.map('map').setView([saveLat1(), saveLon1()], 5);
-				var newLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-				map.addLayer(newLayer);
+			map.setView([saveLat1(), saveLon1()], 10);
+
 		 }
 		 function update2()
 		 {
-				map2.remove();
-				map2 = new L.map('map2').setView([saveLat2(), saveLon2()], 5);
-				var newLayer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-				map2.addLayer(newLayer2);
+			map.setView([saveLat2(), saveLon2()], 10);
 		 }
 		 function getCenter1()
 		 {
 		 	saveLat1(1);
 		 	saveLon1(1);
+			document.getElementById("lat1").value=saveLat1(1);	
+			document.getElementById("lon1").value=saveLon1(1);
+
+			console.log("Lat1: ", saveLat1(1), "Lon1: ", saveLon1(1));
+
 		 }
 		 function getCenter2()
 		 {
 		 	saveLat2(1);
-		 	console.log(saveLat2(1));
 		 	saveLon2(1);
+			document.getElementById("lat2").value=saveLat2(1);	
+			document.getElementById("lon2").value=saveLon2(1);
+			console.log("Lat2: ", saveLat2(1), "Lon2: ", saveLon2(1));
 		 }
       </script>
    </body>
