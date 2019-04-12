@@ -59,9 +59,9 @@
          //event listening?
          //map.onmouseup = getCenter1();
          //map2.onmouseup = getCenter2();
-
+		getCenter1();
+		getCenter2();
 		 //console.log(#lat1);
-		console.log(lat1);
 		function saveLat1(x)
 		{
 			if (x == undefined) {
@@ -111,7 +111,7 @@
 		 }
 		 function update2()
 		 {
-			map.setView([saveLat2(), saveLon2()], 10);
+			map2.setView([saveLat2(), saveLon2()], 10);
 		 }
 		 function getCenter1()
 		 {
@@ -119,9 +119,6 @@
 		 	saveLon1(1);
 			document.getElementById("lat1").value=saveLat1(1);	
 			document.getElementById("lon1").value=saveLon1(1);
-
-			console.log("Lat1: ", saveLat1(1), "Lon1: ", saveLon1(1));
-
 		 }
 		 function getCenter2()
 		 {
@@ -129,7 +126,6 @@
 		 	saveLon2(1);
 			document.getElementById("lat2").value=saveLat2(1);	
 			document.getElementById("lon2").value=saveLon2(1);
-			console.log("Lat2: ", saveLat2(1), "Lon2: ", saveLon2(1));
 		 }
       </script>
    </body>
