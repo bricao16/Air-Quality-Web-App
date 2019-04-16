@@ -8,7 +8,6 @@
       <link rel = "stylesheet" href = "skeleton.css"/>
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
    </head>
 
@@ -70,17 +69,13 @@
          // Adding layer to the map
          map.addLayer(layer);
          map2.addLayer(layer2);
-         //event listening?
-         //map.onmouseup = getCenter1();
-         //map2.onmouseup = getCenter2();
 		getCenter1();
 		getCenter2();
-		 //console.log(#lat1);
 		function saveLat1(x)
 		{
 			if (x == undefined) {
 				var lat_1=document.getElementById("lat1").value;
-						
+
 				return lat_1;
 
 			}
@@ -131,16 +126,60 @@
 		 {
 		 	saveLat1(1);
 		 	saveLon1(1);
-			document.getElementById("lat1").value=saveLat1(1);	
+			document.getElementById("lat1").value=saveLat1(1);
 			document.getElementById("lon1").value=saveLon1(1);
 		 }
 		 function getCenter2()
 		 {
 		 	saveLat2(1);
 		 	saveLon2(1);
-			document.getElementById("lat2").value=saveLat2(1);	
+			document.getElementById("lat2").value=saveLat2(1);
 			document.getElementById("lon2").value=saveLon2(1);
 		 }
+
+		var xmlhttp = new XMLHttpRequest();
+		var myUrl = "https://api.openaq.org/v1/latest?coordinates" + document.getElementById("lat1").value + "," + document.getElementById("lon1").value;
+		console.log(document.getElementById("lat1").value);
+		console.log(myUrl);
+		$.ajax({
+			url: myUrl,
+			type: 'get',
+			dataType: 'html',
+			async: true,
+			success: processData
+		});
+
+		function processData(airdata)
+		{
+			var data = JSON.parse(airdata);
+			loc(data);
+			//pop(data);
+		}
+		function loc()
+		{
+			console.log("getting here");
+			console.log(data);
+			var locLat;
+			var locLon;
+
+			for(var j = 0; j < data.results.length; j++)
+			{
+				locLat = data.results[j].saveLat1();
+				locLon = data.results[j].saveLon1();
+				var mark = L.marker(new L.LatLng(locLat, locLon)).addTo(map);
+				mark;
+			}
+			for(var j = 0; j < data.results.length; j++)
+			{
+				locLat = data.results[j].saveLat2();
+				locLon = data.results[j].saveLon2();
+				var mark = L.marker(new L.LatLng(locLat, locLon)).addTo(map2);
+				mark;
+			}
+		}
+		function pop()
+		{
+		}
       </script>
    </body>
 
