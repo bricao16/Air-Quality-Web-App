@@ -1,1 +1,2 @@
-https://codepen.io/m_clone/pen/eyVQJj
+https://vuejs.org/v2/guide/components-custom-events.html#Binding-Native-Events-to-Components
+https://acdcjunior.github.io/how-bind-date-object-to-input-date-vue.js-v-model.html
