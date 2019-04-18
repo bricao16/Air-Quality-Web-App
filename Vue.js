@@ -20,12 +20,12 @@
 				<div class ="six columns" style = "background: yellow; float: left;   ">
 						<p style = "float: left; min-height: 70%;">
 							<div id="inputbox">
-								<p> Latitude: <input id = "lat1" v-model="latitude">
+								<p> Latitude: <input id = "lat1" value = "saveLat1()" v-model="latitude">
 								<br>
-								Longitude: <input id = "lon1" v-model="longitude">
+								Longitude: <input id = "lon1" value = "saveLon1()" v-model="longitude">
 								<br>
 								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng()"> Change Coordinates </button> </p>
-								<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;" onmouseup = "getCenter1()"></div>
+								<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;" ></div>
 									Filter By Particle: <select v-model="filter">
 									<option value="none"> All Particles </option>
 									<option value="pm25"> pm25 </option>
@@ -35,7 +35,7 @@
 									<option value="o3"> o3 </option>
 								</select>
 								<br>
-								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng()"> Filter </button> </p>
+								<button style="background-color: #197519; color: white;" v-on:click="getData()"> Filter </button> </p>
 							</div>
 
 						</p>
@@ -81,32 +81,18 @@
 						inputbox.location = data.display_name.substr(0, data.display_name.indexOf(','));
 						mymap.panTo(new L.LatLng(inputbox.latitude, inputbox.longitude));
 
-				}
-			}
-		})
-		//getAirData();
-
-		map.on('moveend', function () {
-			var center = map.getCenter();
-			inputbox.longitude = center.lng;
-			inputbox.latitude = center.lat;
-			var request = {
-				url: "https://api.openaq.org/v1/latest?coordinates" + inputbox.latitude + "&lon=" + inputbox.longitude + "&format=json",
-				dataType: "json",
-				success: moveData
-			};
-			$.ajax(request);
-			function moveData (data)
-			{
-				if (inputbox.latlng == true)
+				},
+				changeLatLng: function()
 				{
-					inputbox.location = data.display_name.substr(0, data.display_name.indexOf(','));
+					document.getElementById("lat1").value = map.getCenter().lat;
+					document.getElementById("lon1").value = map.getCenter().lng;
+				},
+				getData: function()
+				{
+					console.log("This function does nothing right now except print this message.");
 				}
-				inputbox.latlng = true;
 			}
-			//getAirData();
 		});
-		console.log(map.getCenter().lat);
 		/*
 		//this function fetches the air data with given latitude and longitude
 		function getAirData(){
@@ -137,12 +123,10 @@
 
 		function changeLatLng()
 		{
-			console.log("there should fucking be something here");
 			document.getElementById("lat1").value = map.getCenter().lat;
 			document.getElementById("lon1").value = map.getCenter().lng;
 		}
 
-		/*
 
 		function saveLat1(x)
 		{
@@ -195,7 +179,6 @@
 		 {
 			map2.setView([saveLat2(), saveLon2()], 10);
 		 }
-		 */
 		 function getCenter1()
 		 {
 			document.getElementById("latitude").value = map.getCenter().lat;
