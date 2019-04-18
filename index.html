@@ -21,12 +21,12 @@
 						<p style = "float: left; min-height: 70%;">
 							<div id="inputbox">
 								<!-- Values should save but they FUCKING don't.-->
-								<p> Latitude: <input id = "lat1" value = "saveLat1()" v-model="latitude">
+								<p> Latitude: <input id = "lat1" value = "saveLat1(1)" v-model="latitude">
 								<br>
-								Longitude: <input id = "lon1" value = "saveLon1()" v-model="longitude">
+								Longitude: <input id = "lon1" value = "saveLon1(1)" v-model="longitude">
 								<br>
 								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng()"> Change Coordinates </button> </p>
-								<!--good thing we created a map that doesn't show up when Vue gets brought in. What a great fucking framework. -->
+								<!-- good thing we created a map that doesn't show up when Vue gets brought in. What a great fucking framework. -->
 								<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;" ></div>
 									Filter By Particle: <select v-model="filter">
 									<option value="none"> All Particles </option>
@@ -65,7 +65,7 @@
          // Creating a Layer object
          var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
          var layer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-         // Adding layer to the map
+         // Adding layer to the map, except not actually adding the layer because if I comment the next line out it performs exactly the same as if it wasn't commented out. WHAT THE FUCK
          map.addLayer(layer);
          map2.addLayer(layer2);
 		var inputbox = new Vue({
@@ -84,45 +84,19 @@
 						mymap.panTo(new L.LatLng(inputbox.latitude, inputbox.longitude));
 
 				},
-				//this function gets the correct data but seems to do jack shit when called.
+				//this function gets the correct data at least. Doesn't fix the map but once that is fixed it should be fine.
 				changeLatLng: function()
 				{
-					document.getElementById("lat1").value = map.getCenter().lat;
-					document.getElementById("lon1").value = map.getCenter().lng;
+					map.setView([saveLat1(), saveLon1()], 10);
+					//document.getElementById("lat1").value = map.getCenter().lat;
+					//document.getElementById("lon1").value = map.getCenter().lng;
 				},
 				getData: function()
 				{
-					console.log("This function does nothing right now except print this message.");
+					console.log("This function does nothing right now except as a reminder to make this function actually do something later.");
 				}
 			}
 		});
-		/*
-		//this function fetches the air data with given latitude and longitude
-		function getAirData(){
-			var latitude = inputbox.latitude;
-			var longitude = inputbox.longitude;
-			var distance1 = new L.LatLng(latitude, longitude);
-			var distance2 = new L.LatLng(latitude, mymap.getBounds().getWest());
-			var distance = mymap.distance(distance1, distance2);
-
-			var radius = distance;
-
-			var url1 = "https://api.openaq.org/v1/latest?coordinates=" + latitude + "," + longitude + "&radius=" + radius + "&limit=100";
-
-			if(inputbox.filter!="none"){
-				console.log("filtering")
-				url1=url1+"&parameter="+inputbox.filter+"";
-			}
-			$.ajax({
-				url: url1,
-				type: 'get',
-				dataType:'html',
-				async: true,
-				success: handleData
-			});
-		}
-
-		*/
 
 		function changeLatLng()
 		{
@@ -196,51 +170,6 @@
 			document.getElementById("lon2").value=saveLon2(1);
 
 		 }
-
-		/*
-		var xmlhttp = new XMLHttpRequest();
-		var myUrl = "https://api.openaq.org/v1/latest?coordinates" + document.getElementById("lat1").value + "," + document.getElementById("lon1").value;
-		console.log(document.getElementById("lat1").value);
-		console.log(myUrl);
-		$.ajax({
-			url: myUrl,
-			type: 'get',
-			dataType: 'html',
-			async: true,
-			success: processData
-		});
-
-		function processData(airdata)
-		{
-			var data = JSON.parse(airdata);
-			loc(data);
-			//pop(data);
-		}
-		function loc()
-		{
-			console.log("getting here");
-			console.log(data);
-			var locLat;
-			var locLon;
-
-			for(var j = 0; j < data.results.length; j++)
-			{
-				locLat = data.results[j].saveLat1();
-				locLon = data.results[j].saveLon1();
-				var mark = L.marker(new L.LatLng(locLat, locLon)).addTo(map);
-				mark;
-			}
-			for(var j = 0; j < data.results.length; j++)
-			{
-				locLat = data.results[j].saveLat2();
-				locLon = data.results[j].saveLon2();
-				var mark = L.marker(new L.LatLng(locLat, locLon)).addTo(map2);
-				mark;
-			}
-		}
-		function pop()
-		{
-		}*/
       </script>
    </body>
 
