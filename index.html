@@ -20,13 +20,12 @@
 				<div class ="six columns" style = "background: yellow; float: left;   ">
 						<p style = "float: left; min-height: 70%;">
 							<div id="inputbox">
-								<!-- Values should save but they FUCKING don't.-->
+								<!-- Values should save but they don't.-->
 								<p> Latitude: <input id = "lat1" value = "saveLat1(1)" v-model="latitude">
 								<br>
 								Longitude: <input id = "lon1" value = "saveLon1(1)" v-model="longitude">
 								<br>
 								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng()"> Change Coordinates </button> </p>
-								<!-- good thing we created a map that doesn't show up when Vue gets brought in. What a great fucking framework. -->
 								<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;" ></div>
 									Filter By Particle: <select v-model="filter">
 									<option value="none"> All Particles </option>
@@ -65,7 +64,7 @@
          // Creating a Layer object
          var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
          var layer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-         // Adding layer to the map, except not actually adding the layer because if I comment the next line out it performs exactly the same as if it wasn't commented out. WHAT THE FUCK
+         // Adding layer to the map, except not actually adding the layer because if I comment the next line out it performs exactly the same as if it wasn't commented out.
          map.addLayer(layer);
          map2.addLayer(layer2);
 		var inputbox = new Vue({
@@ -77,6 +76,9 @@
 				filter:'none'
 
 			},
+			mounted() {
+			    this.initMap();
+    		},
 			methods: {
 				latlngData: function (data) {
 
@@ -94,7 +96,11 @@
 				getData: function()
 				{
 					console.log("This function does nothing right now except as a reminder to make this function actually do something later.");
-				}
+				},
+				initMap() {
+					var map = L.map('map').setView([44.9537,-93.0900], 10);
+				    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        		}
 			}
 		});
 
@@ -104,7 +110,6 @@
 			document.getElementById("lon1").value = map.getCenter().lng;
 		}
 
-		//fuck all 4 of these functions they do not actually seem to save when called by the lat1 and lon1 elements
 		function saveLat1(x)
 		{
 			if (x == undefined) {
