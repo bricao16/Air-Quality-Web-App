@@ -20,11 +20,13 @@
 				<div class ="six columns" style = "background: yellow; float: left;   ">
 						<p style = "float: left; min-height: 70%;">
 							<div id="inputbox">
+								<!-- Values should save but they FUCKING don't.-->
 								<p> Latitude: <input id = "lat1" value = "saveLat1()" v-model="latitude">
 								<br>
 								Longitude: <input id = "lon1" value = "saveLon1()" v-model="longitude">
 								<br>
 								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng()"> Change Coordinates </button> </p>
+								//good thing we created a map that doesn't show up when Vue gets brought in. What a great fucking framework.
 								<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;" ></div>
 									Filter By Particle: <select v-model="filter">
 									<option value="none"> All Particles </option>
@@ -82,6 +84,7 @@
 						mymap.panTo(new L.LatLng(inputbox.latitude, inputbox.longitude));
 
 				},
+				//this function gets the correct data but seems to do jack shit when called.
 				changeLatLng: function()
 				{
 					document.getElementById("lat1").value = map.getCenter().lat;
@@ -127,7 +130,7 @@
 			document.getElementById("lon1").value = map.getCenter().lng;
 		}
 
-
+		//fuck all 4 of these functions they do not actually seem to save when called by the lat1 and lon1 elements
 		function saveLat1(x)
 		{
 			if (x == undefined) {
