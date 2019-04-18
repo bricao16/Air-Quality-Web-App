@@ -20,11 +20,11 @@
 				<div class ="six columns" style = "background: yellow; float: left;   ">
 						<p style = "float: left; min-height: 70%;">
 							<div id="inputbox">
-								<p> Latitude: <input v-model="latitude">
+								<p> Latitude: <input id = "lat1" v-model="latitude">
 								<br>
-								Longitude: <input v-model="longitude">
+								Longitude: <input id = "lon1" v-model="longitude">
 								<br>
-								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng"> Change Coordinates </button> </p>
+								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng()"> Change Coordinates </button> </p>
 								<div id = "map" style = " padding-bottom: 50%; width: 75%; height: 75%; border: 3px solid #73AD21;" onmouseup = "getCenter1()"></div>
 									Filter By Particle: <select v-model="filter">
 									<option value="none"> All Particles </option>
@@ -33,11 +33,11 @@
 									<option value="co"> co </option>
 									<option value="so2"> so2 </option>
 									<option value="o3"> o3 </option>
-								</select> 
+								</select>
 								<br>
-								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng"> Filter </button> </p>
+								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng()"> Filter </button> </p>
 							</div>
-							
+
 						</p>
 				</div>
 				<div class ="six columns" style = "background: green; float: left; ">
@@ -65,12 +65,7 @@
          var layer2 = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
          // Adding layer to the map
          map.addLayer(layer);
-         map2.addLayer(layer2);	
-		/*console.log('hi');
-		console.log(map.getCenter().lat);
-		getCenter1();
-		getCenter2();
-	*/
+         map2.addLayer(layer2);
 		var inputbox = new Vue({
 			el: '#inputbox',
 			data: {
@@ -82,14 +77,14 @@
 			},
 			methods: {
 				latlngData: function (data) {
-		
+
 						inputbox.location = data.display_name.substr(0, data.display_name.indexOf(','));
 						mymap.panTo(new L.LatLng(inputbox.latitude, inputbox.longitude));
-					
+
 				}
 			}
-		})		
-		getAirData();
+		})
+		//getAirData();
 
 		map.on('moveend', function () {
 			var center = map.getCenter();
@@ -109,9 +104,9 @@
 				}
 				inputbox.latlng = true;
 			}
-			getAirData();
-		});	
-		console.log(map.getCenter());
+			//getAirData();
+		});
+		console.log(map.getCenter().lat);
 		/*
 		//this function fetches the air data with given latitude and longitude
 		function getAirData(){
@@ -120,9 +115,9 @@
 			var distance1 = new L.LatLng(latitude, longitude);
 			var distance2 = new L.LatLng(latitude, mymap.getBounds().getWest());
 			var distance = mymap.distance(distance1, distance2);
-			
+
 			var radius = distance;
-			
+
 			var url1 = "https://api.openaq.org/v1/latest?coordinates=" + latitude + "," + longitude + "&radius=" + radius + "&limit=100";
 
 			if(inputbox.filter!="none"){
@@ -136,13 +131,19 @@
 				async: true,
 				success: handleData
 			});
-		}		
-	
+		}
+
 		*/
-		
-		
+
+		function changeLatLng()
+		{
+			console.log("there should fucking be something here");
+			document.getElementById("lat1").value = map.getCenter().lat;
+			document.getElementById("lon1").value = map.getCenter().lng;
+		}
+
 		/*
-		
+
 		function saveLat1(x)
 		{
 			if (x == undefined) {
@@ -199,7 +200,7 @@
 		 {
 			document.getElementById("latitude").value = map.getCenter().lat;
 			document.getElementById("longitude").value = map.getCenter().lng;
-			
+
 		 }
 		 function getCenter2()
 		 {
@@ -207,9 +208,9 @@
 		 	saveLon2(1);
 			document.getElementById("lat2").value=saveLat2(1);
 			document.getElementById("lon2").value=saveLon2(1);
-			
+
 		 }
-		 
+
 		/*
 		var xmlhttp = new XMLHttpRequest();
 		var myUrl = "https://api.openaq.org/v1/latest?coordinates" + document.getElementById("lat1").value + "," + document.getElementById("lon1").value;
