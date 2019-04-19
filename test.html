@@ -1,0 +1,1075 @@
+<!doctype html>
+<html>
+	<head>
+		<title> Air Quality Map </title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<!-- leaflet stylesheet -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+			integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+			crossorigin=""/>
+		<!-- leaflet script -->
+		<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+			integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+			crossorigin=""></script>
+		<!-- vue script -->
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+		<!-- jquery script -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<!-- our stylesheet -->
+		<link rel="stylesheet" href="style.css"/>
+      <! <link rel = "stylesheet" href = "normalize.css"/>
+      <! <link rel = "stylesheet" href = "skeleton.css"/>
+	</head>
+	
+	<body>
+		<!-- navigation panel -->
+	   <div class ="container">
+			<div class ="row" style = "background: red;">
+				<div class ="six columns" style = "background: yellow; float: left;   ">
+					<div id="navigation">
+						<ul class="navigation">
+							<li class="navigation"> <a class="navigation" href="https://blas1663.github.io/AirQuality/map.html" target="_self"> Air Quality Map </a> </li>
+							<li class="navigation"> <a class="navigation" href="https://blas1663.github.io/AirQuality/about.html" target="_self"> About the Project </a> </li>
+						</ul>
+					</div>
+					<!-- page header -->
+					<h1 id="header"> Air Quality Map </h1>
+					
+					
+					<div id="fullscreen" style="background-color: white; width: 100%;">
+						<!-- input box -->
+						<div id="inputbox">
+							<p> 
+								Latitude: <input v-model="latitude">
+								<br>
+								Longitude: <input v-model="longitude">
+								<br>
+								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng"> Change Coordinates </button> 
+							</p>
+							<p>
+								Location: 
+								<input v-model="location">
+								
+								<button style="background-color: #197519; color: white;" v-on:click="changeLoc"> Change Location </button>
+								<br>
+							</p>
+							<p>
+								Filter By Particle: 
+								<select v-model="filter">
+								<option value="none"> All Particles </option>
+								<option value="pm25"> pm25 </option>
+								<option value="pm10"> pm10 </option>
+								<option value="co"> co </option>
+								<option value="so2"> so2 </option>
+								<option value="o3"> o3 </option>
+								</select> 
+								
+								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng"> Filter </button> 
+							</p>
+						</div>
+						<div id="map"> </div>
+						<button id="open" style="background-color: #197519; color: white;" onclick="openFullscreen()"> Click for Fullscreen </button>
+						<button id="close" style="background-color: #197519; color: white; visibility: hidden;" onclick="closeFullscreen();"> Click for Regular Screen </button>
+					</div>
+					<div id="table1">
+						</br>
+						<!-- legend -->
+						<div id="under">
+							<h3 style="margin: 5px;">Table Color Legend</h3>
+							<table id="legend">
+								<tr>
+									<td><span style="background-color:rgb(0,288,0)">____</span></td>
+									<td>Good</td>
+									<td><span style="background-color:rgb(255,255,0)">____</span></td>
+									<td>Moderate</td>
+									<td><span style="background-color:rgb(255,126,0)">____</span></td>
+									<td>Unhealty for Sensitive Groups</td>
+									<td><span style="background-color:rgb(255,0,0)">____</span></td>
+									<td>Unhealthy</td>
+									<td><span style="background-color:rgb(126,0,35)">____</span></td>
+									<td>Hazardous</td>
+								</tr>
+							</table>
+						</div>
+						<!-- table -->
+						<h1 id="tableheader"> Air Quality Measurements </h1>
+						</br>
+						<div id="table">
+							<table id="results" align="center">
+								<tr>
+									<td><b> Particle </b></td>
+									<td><b> Value </b></td>
+									<td><b> Unit </b></td>
+									<td><b> Location </b></td>
+									<td><b> Date </b></td>
+								</tr>
+							</table>
+						</div>
+					</div>	
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				<div class ="six columns" style = "background: green; float: left; ">
+					<div id="navigation2">
+						<ul class="navigation2">
+							<li class="navigation2"> <a class="navigation" href="https://blas1663.github.io/AirQuality/map.html" target="_self"> Air Quality Map </a> </li>
+							<li class="navigation2"> <a class="navigation" href="https://blas1663.github.io/AirQuality/about.html" target="_self"> About the Project </a> </li>
+						</ul>
+					</div>
+					<!-- page header -->
+					<h1 id="header2"> Air Quality Map </h1>
+					
+					
+					<div id="fullscreen2" style="background-color: white; width: 100%;">
+						<!-- input box -->
+						<div id="inputbox2">
+							<p> 
+								Latitude: <input v-model="latitude2">
+								<br>
+								Longitude: <input v-model="longitude2">
+								<br>
+								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng2"> Change Coordinates </button> 
+							</p>
+							<p>
+								Location: 
+								<input v-model="location2">
+								
+								<button style="background-color: #197519; color: white;" v-on:click="changeLoc2"> Change Location </button>
+								<br>
+							</p>
+							<p>
+								Filter By Particle: 
+								<select v-model="filter2">
+								<option value="none"> All Particles </option>
+								<option value="pm25"> pm25 </option>
+								<option value="pm10"> pm10 </option>
+								<option value="co"> co </option>
+								<option value="so2"> so2 </option>
+								<option value="o3"> o3 </option>
+								</select> 
+								
+								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng2"> Filter </button> 
+							</p>
+						</div>
+						<div id="map2"> </div>
+						<button id="open2" style="background-color: #197519; color: white;" onclick="openFullscreen2()"> Click for Fullscreen </button>
+						<button id="close2" style="background-color: #197519; color: white; visibility: hidden;" onclick="closeFullscreen2();"> Click for Regular Screen </button>
+					</div>
+					<div id="table2">
+						</br>
+						<!-- legend -->
+						<div id="under2">
+							<h3 style="margin: 5px;">Table Color Legend</h3>
+							<table id="legend2">
+								<tr>
+									<td><span style="background-color:rgb(0,288,0)">____</span></td>
+									<td>Good</td>
+									<td><span style="background-color:rgb(255,255,0)">____</span></td>
+									<td>Moderate</td>
+									<td><span style="background-color:rgb(255,126,0)">____</span></td>
+									<td>Unhealty for Sensitive Groups</td>
+									<td><span style="background-color:rgb(255,0,0)">____</span></td>
+									<td>Unhealthy</td>
+									<td><span style="background-color:rgb(126,0,35)">____</span></td>
+									<td>Hazardous</td>
+								</tr>
+							</table>
+						</div>
+						<!-- table -->
+						<h1 id="tableheader2"> Air Quality Measurements </h1>
+						</br>
+						<div id="table2">
+							<table id="results2" align="center">
+								<tr>
+									<td><b> Particle </b></td>
+									<td><b> Value </b></td>
+									<td><b> Unit </b></td>
+									<td><b> Location </b></td>
+									<td><b> Date </b></td>
+								</tr>
+							</table>
+						</div>
+				</div>
+			</div>
+		</div>				
+		<script>
+			var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5);
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+				maxZoom: 18,
+				id: 'mapbox.streets',
+			}).addTo(mymap);
+			
+			var mymap2 = L.map('map2').setView([44.973572561901726, -93.25746774673463], 14.5);
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+				maxZoom: 18,
+				id: 'mapbox.streets',
+			}).addTo(mymap2);			
+				
+				
+				
+				
+				
+			var inputbox = new Vue({
+				el: '#inputbox',
+				data: {
+					latitude: '44.973572561901726',
+					longitude: '-93.25746774673463',
+					location: 'US Bank Stadium',
+					latlng: true,
+					filter:'none'
+
+				},
+				methods: {
+					changeLatLng: function () {
+						var request = {
+							url: "https://us1.locationiq.com/v1/reverse.php?key=760f1644b0fbbc&lat=" + this.latitude + "&lon=" + this.longitude + "&format=json",
+							dataType: "json",
+							success: latlngData
+						};
+						$.ajax(request);
+						function latlngData (data)
+						{
+							inputbox.location = data.display_name.substr(0, data.display_name.indexOf(','));
+							mymap.panTo(new L.LatLng(inputbox.latitude, inputbox.longitude));
+						}
+					},
+					changeLoc: function () {
+						var request = {
+							url: "https://us1.locationiq.com/v1/search.php?key=760f1644b0fbbc&q=" + this.location + "&format=json",
+							dataType: "json",
+							success: locationData
+						};
+						$.ajax(request);
+						function locationData (data)
+						{
+							this.latitude = data[0].lat;
+							this.longitude = data[0].lon;
+							mymap.panTo(new L.LatLng(this.latitude, this.longitude));
+						}
+						this.latlng = false;
+					}
+				}
+			})
+			getAirData();
+			
+			mymap.on('moveend', function () {
+				var center = mymap.getCenter();
+				inputbox.longitude = center.lng;
+				inputbox.latitude = center.lat;
+				var request = {
+					url: "https://us1.locationiq.com/v1/reverse.php?key=760f1644b0fbbc&lat=" + inputbox.latitude + "&lon=" + inputbox.longitude + "&format=json",
+					dataType: "json",
+					success: moveData
+				};
+				$.ajax(request);
+				function moveData (data)
+				{
+					if (inputbox.latlng == true)
+					{
+						inputbox.location = data.display_name.substr(0, data.display_name.indexOf(','));
+					}
+					inputbox.latlng = true;
+				}
+				getAirData();
+			});
+			
+			//this function fetches the air data with given latitude and longitude
+			function getAirData(){
+				var latitude = inputbox.latitude;
+				var longitude = inputbox.longitude;
+				var distance1 = new L.LatLng(latitude, longitude);
+				var distance2 = new L.LatLng(latitude, mymap.getBounds().getWest());
+				var distance = mymap.distance(distance1, distance2);
+				
+				var radius = distance;
+				
+				var url1 = "https://api.openaq.org/v1/latest?coordinates=" + latitude + "," + longitude + "&radius=" + radius + "&limit=100";
+
+				if(inputbox.filter!="none"){
+					console.log("filtering")
+					url1=url1+"&parameter="+inputbox.filter+"";
+				}
+				$.ajax({
+					url: url1,
+					type: 'get',
+					dataType:'html',
+					async: true,
+					success: handleData
+				});
+			}		
+			function populateTable(data){
+				var table = document.getElementById("results");
+				table.innerHTML="";//emptys table of previous data points
+				var param = "";
+				var val = "";
+				var location = "";
+				var date = "";
+				var unit = "";
+				var current;
+				var htmlStr ="";
+				var color = "";
+				var colorstring ="";
+
+				var header = "<td><b>Particle</b></td><td><b>Value</b></td><td><b>Unit</b></td><td><b>Location</b></td><td><b>Date</b></td>";
+				var headrow = table.insertRow(0);
+				headrow.innerHTML=header;
+
+
+				for (var i = 0; i < data.results.length; i++){//loops through the measurement locations
+					location = data.results[i].location;
+					current = data.results[i];
+					for(var j = 0; j<current.measurements.length; j++){//loop through each measurement at location
+						param = current.measurements[j].parameter;
+						val = current.measurements[j].value;
+						unit = current.measurements[j].unit;
+						date = current.measurements[j].lastUpdated;
+
+						color = colorize(param,val);
+						
+						//creating row in table
+						//row format is param, value,unit,location,date
+						var newRow =  table.insertRow(-1);
+						htmlStr = "<td>"+param+"</td><td>"+val+colorstring+"</td><td>"+unit+"</td><td>"+location+"</td><td>"+date+"</td>"
+						
+						//console.log(htmlStr);
+						newRow.innerHTML=htmlStr;
+						newRow.style.backgroundColor=color;
+					}
+				}
+				//console.log(colorstring);
+			}//populate table
+
+			function handleData(airdata) {
+				var data = JSON.parse(airdata);
+				locations(data);
+				populateTable(data);	
+			}// handle data	
+
+			//this function is passed the fetched data from openaq and then loops through the measurment locations examining their lat & lon coordinates
+			function locations(data){
+				//function handles the locations that are retrieved from getLocations
+				//console.log("locations called");//testing
+				//console.log(data);
+
+				var locationLat;
+				var locationLon;
+
+				for(var i = 0; i < data.results.length; i++){
+					locationLat = data.results[i].coordinates.latitude;//get lattitude of location[i]
+					locationLon = data.results[i].coordinates.longitude;//get longitude of location[i]
+					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap);
+					marker;
+				}//results loop
+			}
+
+			//fullscreen functions
+			var elem = document.getElementById("fullscreen");
+			var open = document.getElementById("open");
+			var close = document.getElementById("close");
+			function openFullscreen() {
+				var map = document.getElementById("map");
+				map.style.width = '100%';
+				map.style.height = '725px';
+				map.style.margin = 'auto';
+				var input = document.getElementById("inputbox");
+				input.style.margin = '50px';
+				if (elem.requestFullscreen) {
+					elem.requestFullscreen();
+				}
+				else if (elem.webkitRequestFullscreen) {
+					elem.webkitRequestFullscreen();
+				}
+				open.style.visibility = 'hidden';
+				close.style.visibility = 'visible';
+				close.style.float = 'left';
+			}
+			function closeFullscreen() {
+				var map = document.getElementById("map");
+				map.style.width = '60%';
+				map.style.height = '540px';
+				var input = document.getElementById("inputbox");
+				input.style.margin = '0px';
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				}
+				else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+				}
+				open.style.visibility = 'visible';
+				close.style.visibility = 'hidden';
+				open.style.float = 'left';
+			}
+
+
+
+			
+			
+			
+			
+
+			
+			var inputbox2 = new Vue({
+				el: '#inputbox2',
+				data: {
+					latitude2: '44.973572561901726',
+					longitude2: '-93.25746774673463',
+					location2: 'US Bank Stadium',
+					latlng2: true,
+					filter2:'none'
+
+				},
+				methods: {
+					changeLatLng2: function () {
+						var request = {
+							url: "https://us1.locationiq.com/v1/reverse.php?key=760f1644b0fbbc&lat=" + this.latitude2 + "&lon=" + this.longitude2 + "&format=json",
+							dataType: "json",
+							success: latlngData2
+						};
+						$.ajax(request);
+						function latlngData2 (data)
+						{
+							inputbox2.location2 = data.display_name.substr(0, data.display_name.indexOf(','));
+							mymap2.panTo(new L.LatLng(inputbox2.latitude2, inputbox2.longitude2));
+						}
+					},
+					changeLoc2: function () {
+						var request = {
+							url: "https://us1.locationiq.com/v1/search.php?key=760f1644b0fbbc&q=" + this.location2 + "&format=json",
+							dataType: "json",
+							success: locationData2
+						};
+						$.ajax(request);
+						function locationData2 (data)
+						{
+							this.latitude2 = data[0].lat;
+							this.longitude2 = data[0].lon;
+							mymap2.panTo(new L.LatLng(this.latitude2, this.longitude2));
+						}
+						this.latlng2 = false;
+					}
+				}
+			})
+			getAirData2();
+			
+			mymap2.on('moveend', function () {
+				var center = mymap2.getCenter();
+				inputbox2.longitude2 = center.lng;
+				inputbox2.latitude2 = center.lat;
+				var request = {
+					url: "https://us1.locationiq.com/v1/reverse.php?key=760f1644b0fbbc&lat=" + inputbox2.latitude2 + "&lon=" + inputbox2.longitude2 + "&format=json",
+					dataType: "json",
+					success: moveData2
+				};
+				$.ajax(request);
+				function moveData2 (data)
+				{
+					if (inputbox2.latlng == true)
+					{
+						inputbox2.location2 = data.display_name.substr(0, data.display_name.indexOf(','));
+					}
+					inputbox2.latlng = true;
+				}
+				getAirData2();
+			});
+
+			
+
+			
+			function getAirData2(){
+				var latitude2 = inputbox2.latitude2;
+				var longitude2 = inputbox2.longitude2;
+				var distance1 = new L.LatLng(latitude2, longitude2);
+				var distance2 = new L.LatLng(latitude2, mymap2.getBounds().getWest());
+				var distance = mymap2.distance(distance1, distance2);
+				
+				var radius = distance;
+				
+				var url2 = "https://api.openaq.org/v1/latest?coordinates=" + latitude2 + "," + longitude2 + "&radius=" + radius + "&limit=100";
+
+				if(inputbox2.filter!="none"){
+					console.log("filtering")
+					url2=url2+"&parameter="+inputbox2.filter+"";
+				}
+				$.ajax({
+					url: url2,
+					type: 'get',
+					dataType:'html',
+					async: true,
+					success: handleData2
+				});
+			}
+			function populateTable2(data){
+				var table = document.getElementById("results2");
+				table.innerHTML="";//emptys table of previous data points
+				var param = "";
+				var val = "";
+				var location = "";
+				var date = "";
+				var unit = "";
+				var current;
+				var htmlStr ="";
+				var color = "";
+				var colorstring ="";
+
+				var header = "<td><b>Particle</b></td><td><b>Value</b></td><td><b>Unit</b></td><td><b>Location</b></td><td><b>Date</b></td>";
+				var headrow = table.insertRow(0);
+				headrow.innerHTML=header;
+
+
+				for (var i = 0; i < data.results.length; i++){//loops through the measurement locations
+					location = data.results[i].location;
+					current = data.results[i];
+					for(var j = 0; j<current.measurements.length; j++){//loop through each measurement at location
+						param = current.measurements[j].parameter;
+						val = current.measurements[j].value;
+						unit = current.measurements[j].unit;
+						date = current.measurements[j].lastUpdated;
+
+						color = colorize(param,val);
+						
+						//creating row in table
+						//row format is param, value,unit,location,date
+						var newRow =  table.insertRow(-1);
+						htmlStr = "<td>"+param+"</td><td>"+val+colorstring+"</td><td>"+unit+"</td><td>"+location+"</td><td>"+date+"</td>"
+						
+						console.log(htmlStr);
+						newRow.innerHTML=htmlStr;
+						newRow.style.backgroundColor=color;
+					}
+				}
+				//console.log(colorstring);
+			}//populate table
+
+			function handleData2(airdata) {
+				var data2 = JSON.parse(airdata);
+				locations2(data2);
+				populateTable2(data2);	
+			}// handle data	
+
+			//this function is passed the fetched data from openaq and then loops through the measurment locations examining their lat & lon coordinates
+			function locations2(data){
+				//function handles the locations that are retrieved from getLocations
+				//console.log("locations called");//testing
+				//console.log(data);
+
+				var locationLat2;
+				var locationLon2;
+
+				for(var i = 0; i < data.results.length; i++){
+					locationLat2 = data.results[i].coordinates.latitude2;//get lattitude of location[i]
+					locationLon2 = data.results[i].coordinates.longitude2;//get longitude of location[i]
+					var marker2 = L.marker2(new L.LatLng(locationLat2, locationLon2)).addTo(mymap2);
+					marker2;
+				}//results loop
+			}
+
+			//fullscreen functions
+			var elem2 = document.getElementById("fullscreen2");
+			var open2 = document.getElementById("open2");
+			var close2 = document.getElementById("close2");
+			function openFullscreen2() {
+				var map2 = document.getElementById("map2");
+				map2.style.width = '100%';
+				map2.style.height = '725px';
+				map2.style.margin = 'auto';
+				var input2 = document.getElementById("inputbox2");
+				input2.style.margin = '50px';
+				if (elem2.requestFullscreen) {
+					elem2.requestFullscreen();
+				}
+				else if (elem2.webkitRequestFullscreen) {
+					elem2.webkitRequestFullscreen();
+				}
+				open2.style.visibility = 'hidden';
+				close2.style.visibility = 'visible';
+				close2.style.float = 'left';
+			}
+			function closeFullscreen2() {
+				var map2 = document.getElementById("map2");
+				map2.style.width = '60%';
+				map2.style.height = '540px';
+				var input2 = document.getElementById("inputbox2");
+				input2.style.margin = '0px';
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				}
+				else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+				}
+				open2.style.visibility = 'visible';
+				close2.style.visibility = 'hidden';
+				open2.style.float = 'left';
+			}
+
+
+			//color the table
+			function colorize(param, value){
+				//will get passed parameter and value returns span tag used in colorizing 
+				var good = "rgb(0,288,0)";
+				var moderate = "rgb(255,255,0)";
+				var unhealthyForSensitve = "rgb(255,126,0)";
+				var unhealthy = "rgb(255,0,0)";
+				var veryUnhealthy = "rgb(143,63,151)";
+				var hazardous = "rgb(126,0,35)";
+
+				//pm25
+				if(param == "pm25"){
+					if(value <= 12.0){
+						return good;
+					}
+					else if(value >=12.1 && value <=35.4){
+						return moderate;
+					}
+					else if(value >= 35.5 && value <=55.4){
+						return unhealthyForSensitve;
+					}
+					else if(value >= 55.5 && value <= 150.4){
+						return unhealthy;
+					}
+					else if(value >=150.5 && value <=250.4){
+						return veryUnhealthy;
+					}
+					else if(value >= 250.5){
+						return hazardous;
+					}
+				}//pm25
+				if(param == "co"){
+					if(value <= 4.4 ){
+						return good;
+					}
+					else if(value >= 4.5 && value <= 9.4){
+						return moderate;
+					}
+					else if(value >= 9.5  && value <=12.4){
+						return unhealthyForSensitve;
+					}
+					else if(value >=12.5  && value <= 15.4){
+						return unhealthy;
+					}
+					else if(value >=15.5 && value <=30.4){
+						return veryUnhealthy;
+					}
+					else if(value >= 30.5){
+						return hazardous;
+					}
+				}//co
+				if(param == "so2"){
+					if(value <= 35){
+						return good;
+					}
+					else if(value >=36 && value <=75){
+						return moderate;
+					}
+					else if(value >= 76 && value <=185){
+						return unhealthyForSensitve;
+					}
+					else if(value >=186  && value <= 304){
+						return unhealthy;
+					}
+					else if(value >= 305&& value <=604){
+						return veryUnhealthy;
+					}
+					else if(value >= 605){
+						return hazardous;
+					}
+				}//so2
+				if(param == "o3"){
+					if(value <=.054 ){
+						return good;
+					}
+					else if(value >= .055&& value <=.07){
+						return moderate;
+					}
+					else if(value >= .071 && value <=.085){
+						return unhealthyForSensitve;
+					}
+					else if(value >= .086 && value <=.105 ){
+						return unhealthy;
+					}
+					else if(value >= .106&& value <=.206){
+						return veryUnhealthy;
+					}
+					else if(value >=.207){
+						return hazardous;
+					}
+				}//o3
+				if(param == "no2"){
+					if(value <= 53){
+						return good;
+					}
+					else if(value >=54 && value <=100){
+						return moderate;
+					}
+					else if(value >= 101 && value <=360){
+						return unhealthyForSensitve;
+					}
+					else if(value >=361  && value <=649 ){
+						return unhealthy;
+					}
+					else if(value >= 650&& value <=1244){
+						return veryUnhealthy;
+					}
+					else if(value >=1250 ){
+						return hazardous;
+					}
+				}//no2
+				if(param == "pm10"){
+					if(value <= 54){
+						return good;
+					}
+					else if(value >= 55&& value <=154){
+						return moderate;
+					}
+					else if(value >=155  && value <=254){
+						return unhealthyForSensitve;
+					}
+					else if(value >= 255 && value <= 354){
+						return unhealthy;
+					}
+					else if(value >=355 && value <=424){
+						return veryUnhealthy;
+					}
+					else if(value >= 425){
+						return hazardous;
+					}
+				}//no2
+				return null;
+			}
+		</script>
+	<style>
+/* Multiple Pages */
+html {
+	font-size: 100%;
+}
+
+/* navigation panel */
+#navigation {
+	width: 100%;
+	margin: 0 auto;
+	position: fixed;
+}
+
+/* navigation components */
+.navigation {
+	background-color: #197519;
+	display: inline;
+	text-align: center;
+	color: white;
+	margin: 0 auto;
+	padding: 12px;
+    text-decoration: none;
+}
+
+/* page header */
+#header {
+	font-size: 3rem;
+	color: white;
+	background-color: #197519;
+	text-align: center;
+	padding: 30px;
+	margin: 0px;
+}
+
+.link {
+	color: white;
+    text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Air Quality Map Page */
+
+/* right side of the page */
+#table1 {
+	width: 39.4%;
+	display: inline;
+	float: left;
+}
+
+/* table header */
+#tableheader {
+	font-size: 3rem;
+	color: white;
+	background-color: #197519;
+	text-align: left;
+	padding-top: 5px;
+	margin: 0px;
+}
+
+/* table */
+#table {
+	text-align: left;
+	margin: auto;
+}
+
+/* input box */
+#inputbox {
+	text-align: left;
+	font-size: 150%;
+	background-color: white;
+}
+
+/* map */
+#map {
+	margin-top: 10px;
+	width: 60%;
+	height: 540px;
+}
+
+/* legend */
+#under{
+	text-align: center;
+}
+
+/* About the Project Page */
+
+/* photos */
+.photos {
+	width: 250px;
+	float: left;
+	color: #197519;
+	padding: 2px;
+	border: 2px solid #197519;
+	margin: 25px;
+}
+
+/* tools header */
+#tools {
+	clear: left;
+}
+
+/* demonstration video */
+iframe {
+	margin: 25px;
+	margin-left: 33%;
+	align: center;
+}
+
+
+
+
+
+
+
+
+html {
+	font-size: 100%;
+}
+
+/* navigation panel */
+#navigation2 {
+	width: 100%;
+	margin: 0 auto;
+	position: fixed;
+}
+
+/* navigation components */
+.navigation2 {
+	background-color: #197519;
+	display: inline;
+	text-align: center;
+	color: white;
+	margin: 0 auto;
+	padding: 12px;
+    text-decoration: none;
+}
+
+/* page header */
+#header2 {
+	font-size: 3rem;
+	color: white;
+	background-color: #197519;
+	text-align: center;
+	padding: 30px;
+	margin: 0px;
+}
+
+.link2 {
+	color: white;
+    text-decoration: none;
+}
+
+button2 {
+  cursor: pointer;
+}
+
+/* Air Quality Map Page */
+
+/* right side of the page */
+#table2 {
+	width: 39.4%;
+	display: inline;
+	float: left;
+}
+
+/* table header */
+#tableheader2 {
+	font-size: 3rem;
+	color: white;
+	background-color: #197519;
+	text-align: left;
+	padding-top: 5px;
+	margin: 0px;
+}
+
+/* table */
+#table2 {
+	text-align: left;
+	margin: auto;
+}
+
+/* input box */
+#inputbox2 {
+	text-align: left;
+	font-size: 150%;
+	background-color: white;
+}
+
+/* map */
+#map2 {
+	margin-top: 10px;
+	width: 60%;
+	height: 540px;
+}
+
+/* legend */
+#under2{
+	text-align: center;
+}
+
+/* About the Project Page */
+
+/* photos */
+.photos2 {
+	width: 250px;
+	float: left;
+	color: #197519;
+	padding: 2px;
+	border: 2px solid #197519;
+	margin: 25px;
+}
+
+/* tools header */
+#tools2 {
+	clear: left;
+}
+
+/* demonstration video */
+iframe2 {
+	margin: 25px;
+	margin-left: 33%;
+	align: center;
+}
+
+
+
+
+
+
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box; }
+
+/* For devices larger than 400px */
+@media (min-width: 400px) {
+  .container {
+    width: 100%;
+    padding: 0; }
+}
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+  .container {
+    width: 100%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns          { margin-left: 8.66666666667%; }
+  .offset-by-two.column,
+  .offset-by-two.columns          { margin-left: 17.3333333333%; }
+  .offset-by-three.column,
+  .offset-by-three.columns        { margin-left: 26%;            }
+  .offset-by-four.column,
+  .offset-by-four.columns         { margin-left: 34.6666666667%; }
+  .offset-by-five.column,
+  .offset-by-five.columns         { margin-left: 43.3333333333%; }
+  .offset-by-six.column,
+  .offset-by-six.columns          { margin-left: 52%;            }
+  .offset-by-seven.column,
+  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+  .offset-by-eight.column,
+  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+  .offset-by-nine.column,
+  .offset-by-nine.columns         { margin-left: 78.0%;          }
+  .offset-by-ten.column,
+  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns     { margin-left: 52%; }
+
+}
+
+
+
+
+
+
+
+	</style>
+	</body>
+
+</html>
