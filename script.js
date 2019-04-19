@@ -1,4 +1,4 @@
-var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5);
+			var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5);
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 				maxZoom: 18,
@@ -169,43 +169,7 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 				}//results loop
 			}
 
-			//fullscreen functions
-			var elem = document.getElementById("fullscreen");
-			var open = document.getElementById("open");
-			var close = document.getElementById("close");
-			function openFullscreen() {
-				var map = document.getElementById("map");
-				map.style.width = '100%';
-				map.style.height = '725px';
-				map.style.margin = 'auto';
-				var input = document.getElementById("inputbox");
-				input.style.margin = '50px';
-				if (elem.requestFullscreen) {
-					elem.requestFullscreen();
-				}
-				else if (elem.webkitRequestFullscreen) {
-					elem.webkitRequestFullscreen();
-				}
-				open.style.visibility = 'hidden';
-				close.style.visibility = 'visible';
-				close.style.float = 'left';
-			}
-			function closeFullscreen() {
-				var map = document.getElementById("map");
-				map.style.width = '60%';
-				map.style.height = '540px';
-				var input = document.getElementById("inputbox");
-				input.style.margin = '0px';
-				if (document.exitFullscreen) {
-					document.exitFullscreen();
-				}
-				else if (document.webkitExitFullscreen) {
-					document.webkitExitFullscreen();
-				}
-				open.style.visibility = 'visible';
-				close.style.visibility = 'hidden';
-				open.style.float = 'left';
-			}
+
 
 
 
@@ -228,7 +192,7 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 				methods: {
 					changeLatLng2: function () {
 						var request = {
-							url: "https://us1.locationiq.com/v1/reverse.php?key=760f1644b0fbbc&lat=" + this.latitude2 + "&lon=" + this.longitude2 + "&format=json",
+							url: "https://us1.locationiq.com/v1/reverse.php?key=c08e44fad232d6&lat=" + this.latitude2 + "&lon=" + this.longitude2 + "&format=json",
 							dataType: "json",
 							success: latlngData2
 						};
@@ -241,7 +205,7 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 					},
 					changeLoc2: function () {
 						var request = {
-							url: "https://us1.locationiq.com/v1/search.php?key=760f1644b0fbbc&q=" + this.location2 + "&format=json",
+							url: "https://us1.locationiq.com/v1/search.php?key=c08e44fad232d6&q=" + this.location2 + "&format=json",
 							dataType: "json",
 							success: locationData2
 						};
@@ -263,18 +227,18 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 				inputbox2.longitude2 = center.lng;
 				inputbox2.latitude2 = center.lat;
 				var request = {
-					url: "https://us1.locationiq.com/v1/reverse.php?key=760f1644b0fbbc&lat=" + inputbox2.latitude2 + "&lon=" + inputbox2.longitude2 + "&format=json",
+					url: "https://us1.locationiq.com/v1/reverse.php?key=c08e44fad232d6&lat=" + inputbox2.latitude2 + "&lon=" + inputbox2.longitude2 + "&format=json",
 					dataType: "json",
 					success: moveData2
 				};
 				$.ajax(request);
 				function moveData2 (data)
 				{
-					if (inputbox2.latlng == true)
+					if (inputbox2.latlng2 == true)
 					{
 						inputbox2.location2 = data.display_name.substr(0, data.display_name.indexOf(','));
 					}
-					inputbox2.latlng = true;
+					inputbox2.latlng2 = true;
 				}
 				getAirData2();
 			});
@@ -293,9 +257,9 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 
 				var url2 = "https://api.openaq.org/v1/latest?coordinates=" + latitude2 + "," + longitude2 + "&radius=" + radius + "&limit=100";
 
-				if(inputbox2.filter!="none"){
+				if(inputbox2.filter2!="none"){
 					console.log("filtering")
-					url2=url2+"&parameter="+inputbox2.filter+"";
+					url2=url2+"&parameter="+inputbox2.filter2+"";
 				}
 				$.ajax({
 					url: url2,
@@ -310,7 +274,7 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 				table.innerHTML="";//emptys table of previous data points
 				var param = "";
 				var val = "";
-				var location = "";
+				var location2 = "";
 				var date = "";
 				var unit = "";
 				var current;
@@ -324,7 +288,7 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 
 
 				for (var i = 0; i < data.results.length; i++){//loops through the measurement locations
-					location = data.results[i].location;
+					location2 = data.results[i].location;
 					current = data.results[i];
 					for(var j = 0; j<current.measurements.length; j++){//loop through each measurement at location
 						param = current.measurements[j].parameter;
@@ -337,7 +301,7 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 						//creating row in table
 						//row format is param, value,unit,location,date
 						var newRow =  table.insertRow(-1);
-						htmlStr = "<td>"+param+"</td><td>"+val+colorstring+"</td><td>"+unit+"</td><td>"+location+"</td><td>"+date+"</td>"
+						htmlStr = "<td>"+param+"</td><td>"+val+colorstring+"</td><td>"+unit+"</td><td>"+location2+"</td><td>"+date+"</td>"
 
 						console.log(htmlStr);
 						newRow.innerHTML=htmlStr;
@@ -363,51 +327,12 @@ var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5)
 				var locationLon2;
 
 				for(var i = 0; i < data.results.length; i++){
-					locationLat2 = data.results[i].coordinates.latitude2;//get lattitude of location[i]
-					locationLon2 = data.results[i].coordinates.longitude2;//get longitude of location[i]
-					var marker2 = L.marker2(new L.LatLng(locationLat2, locationLon2)).addTo(mymap2);
+					locationLat2 = data.results[i].coordinates.latitude;//get lattitude of location[i]
+					locationLon2 = data.results[i].coordinates.longitude;//get longitude of location[i]
+					var marker2 = L.marker(new L.LatLng(locationLat2, locationLon2)).addTo(mymap2);
 					marker2;
 				}//results loop
 			}
-
-			//fullscreen functions
-			var elem2 = document.getElementById("fullscreen2");
-			var open2 = document.getElementById("open2");
-			var close2 = document.getElementById("close2");
-			function openFullscreen2() {
-				var map2 = document.getElementById("map2");
-				map2.style.width = '100%';
-				map2.style.height = '725px';
-				map2.style.margin = 'auto';
-				var input2 = document.getElementById("inputbox2");
-				input2.style.margin = '50px';
-				if (elem2.requestFullscreen) {
-					elem2.requestFullscreen();
-				}
-				else if (elem2.webkitRequestFullscreen) {
-					elem2.webkitRequestFullscreen();
-				}
-				open2.style.visibility = 'hidden';
-				close2.style.visibility = 'visible';
-				close2.style.float = 'left';
-			}
-			function closeFullscreen2() {
-				var map2 = document.getElementById("map2");
-				map2.style.width = '60%';
-				map2.style.height = '540px';
-				var input2 = document.getElementById("inputbox2");
-				input2.style.margin = '0px';
-				if (document.exitFullscreen) {
-					document.exitFullscreen();
-				}
-				else if (document.webkitExitFullscreen) {
-					document.webkitExitFullscreen();
-				}
-				open2.style.visibility = 'visible';
-				close2.style.visibility = 'hidden';
-				open2.style.float = 'left';
-			}
-
 
 			//color the table
 			function colorize(param, value){
