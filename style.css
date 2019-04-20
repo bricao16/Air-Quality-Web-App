@@ -1,18 +1,19 @@
 /* Multiple Pages */
 html {
 	font-size: 100%;
+	background-color: #5e595a;
 }
 
 /* navigation panel */
 #navigation {
 	width: 100%;
 	margin: 0 auto;
-	position: fixed;
+	position: absolute;
 }
 
 /* navigation components */
 .navigation {
-	background-color: #197519;
+	background-color: #5cb3f2;
 	display: inline;
 	text-align: center;
 	color: white;
@@ -25,7 +26,7 @@ html {
 #header {
 	font-size: 3rem;
 	color: white;
-	background-color: #197519;
+	background-color: #12498c;
 	text-align: center;
 	padding: 30px;
 	margin: 0px;
@@ -51,9 +52,9 @@ button {
 
 /* table header */
 #tableheader {
-	font-size: 3rem;
+	font-size: 2rem;
 	color: white;
-	background-color: #197519;
+	background-color: #332b4f;
 	text-align: left;
 	padding-top: 5px;
 	margin: 0px;
@@ -63,13 +64,14 @@ button {
 #table {
 	text-align: left;
 	margin: auto;
+
 }
 
 /* input box */
 #inputbox {
 	text-align: left;
 	font-size: 150%;
-	background-color: white;
+	background-color:#bfb7b8;;
 }
 
 /* map */
@@ -116,7 +118,7 @@ html {
 #header2 {
 	font-size: 3rem;
 	color: white;
-	background-color: #197519;
+	background-color: #12498c;
 	text-align: center;
 	padding: 30px;
 	margin: 0px;
@@ -142,9 +144,9 @@ button2 {
 
 /* table header */
 #tableheader2 {
-	font-size: 3rem;
+	font-size: 2rem;
 	color: white;
-	background-color: #197519;
+	background-color: #332b4f;
 	text-align: left;
 	padding-top: 5px;
 	margin: 0px;
@@ -160,7 +162,7 @@ button2 {
 #inputbox2 {
 	text-align: left;
 	font-size: 150%;
-	background-color: white;
+	background-color:#bfb7b8;
 }
 
 /* map */

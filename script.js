@@ -1,15 +1,17 @@
 			var mymap = L.map('map').setView([44.973572561901726, -93.25746774673463], 14.5);
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				maxZoom: 18,
-				id: 'mapbox.streets',
+			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			maxZoom: 18,
+			id: 'mapbox.streets',
+			accessToken: 'pk.eyJ1IjoiY2FvMDQzNTEiLCJhIjoiY2p1cDUxaXlxMzY5cjN5bnF3ZTEwMDZ3ciJ9.m9D1zYdsD2xZQTmiGi8i0A'
 			}).addTo(mymap);
 
 			var mymap2 = L.map('map2').setView([44.973572561901726, -93.25746774673463], 14.5);
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				maxZoom: 18,
-				id: 'mapbox.streets',
+			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			maxZoom: 18,
+			id: 'mapbox.streets',
+			accessToken: 'pk.eyJ1IjoiY2FvMDQzNTEiLCJhIjoiY2p1cDUxaXlxMzY5cjN5bnF3ZTEwMDZ3ciJ9.m9D1zYdsD2xZQTmiGi8i0A'
 			}).addTo(mymap2);
 
 
@@ -29,7 +31,7 @@
 				methods: {
 					changeLatLng: function () {
 						var request = {
-							url: "https://us1.locationiq.com/v1/reverse.php?key=760f1644b0fbbc&lat=" + this.latitude + "&lon=" + this.longitude + "&format=json",
+							url: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + this.latitude + "&lon=" + this.longitude,
 							dataType: "json",
 							success: latlngData
 						};
@@ -42,7 +44,7 @@
 					},
 					changeLoc: function () {
 						var request = {
-							url: "https://us1.locationiq.com/v1/search.php?key=760f1644b0fbbc&q=" + this.location + "&format=json",
+							url: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + inputbox.latitude + "&lon=" + inputbox.longitude,
 							dataType: "json",
 							success: locationData
 						};
@@ -64,7 +66,7 @@
 				inputbox.longitude = center.lng;
 				inputbox.latitude = center.lat;
 				var request = {
-					url: "https://us1.locationiq.com/v1/reverse.php?key=760f1644b0fbbc&lat=" + inputbox.latitude + "&lon=" + inputbox.longitude + "&format=json",
+					url: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + inputbox.latitude + "&lon=" + inputbox.longitude,
 					dataType: "json",
 					success: moveData
 				};
@@ -192,7 +194,7 @@
 				methods: {
 					changeLatLng2: function () {
 						var request = {
-							url: "https://us1.locationiq.com/v1/reverse.php?key=c08e44fad232d6&lat=" + this.latitude2 + "&lon=" + this.longitude2 + "&format=json",
+							url: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + this.latitude2 + "&lon=" + this.longitude2,
 							dataType: "json",
 							success: latlngData2
 						};
@@ -205,7 +207,7 @@
 					},
 					changeLoc2: function () {
 						var request = {
-							url: "https://us1.locationiq.com/v1/search.php?key=c08e44fad232d6&q=" + this.location2 + "&format=json",
+							url: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + inputbox2.latitude2 + "&lon=" + inputbox2.longitude2,
 							dataType: "json",
 							success: locationData2
 						};
@@ -227,7 +229,7 @@
 				inputbox2.longitude2 = center.lng;
 				inputbox2.latitude2 = center.lat;
 				var request = {
-					url: "https://us1.locationiq.com/v1/reverse.php?key=c08e44fad232d6&lat=" + inputbox2.latitude2 + "&lon=" + inputbox2.longitude2 + "&format=json",
+					url: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + inputbox2.latitude2 + "&lon=" + inputbox2.longitude2,
 					dataType: "json",
 					success: moveData2
 				};
@@ -302,13 +304,10 @@
 						//row format is param, value,unit,location,date
 						var newRow =  table.insertRow(-1);
 						htmlStr = "<td>"+param+"</td><td>"+val+colorstring+"</td><td>"+unit+"</td><td>"+location2+"</td><td>"+date+"</td>"
-
-						console.log(htmlStr);
 						newRow.innerHTML=htmlStr;
 						newRow.style.backgroundColor=color;
 					}
 				}
-				//console.log(colorstring);
 			}//populate table
 
 			function handleData2(airdata) {
@@ -319,10 +318,7 @@
 
 			//this function is passed the fetched data from openaq and then loops through the measurment locations examining their lat & lon coordinates
 			function locations2(data){
-				//function handles the locations that are retrieved from getLocations
-				//console.log("locations called");//testing
-				//console.log(data);
-
+	
 				var locationLat2;
 				var locationLon2;
 
@@ -331,20 +327,40 @@
 					locationLon2 = data.results[i].coordinates.longitude;//get longitude of location[i]
 					var marker2 = L.marker(new L.LatLng(locationLat2, locationLon2)).addTo(mymap2);
 					marker2;
-				}//results loop
+				}
 			}
 
 			//color the table
 			function colorize(param, value){
 				//will get passed parameter and value returns span tag used in colorizing
-				var good = "rgb(0,288,0)";
-				var moderate = "rgb(255,255,0)";
-				var unhealthyForSensitve = "rgb(255,126,0)";
-				var unhealthy = "rgb(255,0,0)";
-				var veryUnhealthy = "rgb(143,63,151)";
-				var hazardous = "rgb(126,0,35)";
+				var good = "#00ff04";
+				var moderate = "#eeff00";
+				var unhealthyForSensitve = "#ffc700";
+				var unhealthy = "#ff002e";
+				var veryUnhealthy = "#9800ff";
+				var hazardous = "#8c0046";
 
-				//pm25
+				//ozone
+				if(param == "o3"){
+					if(value <=.054 ){
+						return good;
+					}
+					else if(value >= .055&& value <=.07){
+						return moderate;
+					}
+					else if(value >= .071 && value <=.085){
+						return unhealthyForSensitve;
+					}
+					else if(value >= .086 && value <=.105 ){
+						return unhealthy;
+					}
+					else if(value >= .106&& value <=.206){
+						return veryUnhealthy;
+					}
+					else if(value >=.207){
+						return hazardous;
+					}
+				}//o3			
 				if(param == "pm25"){
 					if(value <= 12.0){
 						return good;
@@ -364,7 +380,27 @@
 					else if(value >= 250.5){
 						return hazardous;
 					}
-				}//pm25
+				}
+				if(param == "pm10"){
+					if(value <= 54){
+						return good;
+					}
+					else if(value >= 55&& value <=154){
+						return moderate;
+					}
+					else if(value >=155  && value <=254){
+						return unhealthyForSensitve;
+					}
+					else if(value >= 255 && value <= 354){
+						return unhealthy;
+					}
+					else if(value >=355 && value <=424){
+						return veryUnhealthy;
+					}
+					else if(value >= 425){
+						return hazardous;
+					}
+				}
 				if(param == "co"){
 					if(value <= 4.4 ){
 						return good;
@@ -405,26 +441,6 @@
 						return hazardous;
 					}
 				}//so2
-				if(param == "o3"){
-					if(value <=.054 ){
-						return good;
-					}
-					else if(value >= .055&& value <=.07){
-						return moderate;
-					}
-					else if(value >= .071 && value <=.085){
-						return unhealthyForSensitve;
-					}
-					else if(value >= .086 && value <=.105 ){
-						return unhealthy;
-					}
-					else if(value >= .106&& value <=.206){
-						return veryUnhealthy;
-					}
-					else if(value >=.207){
-						return hazardous;
-					}
-				}//o3
 				if(param == "no2"){
 					if(value <= 53){
 						return good;
@@ -444,26 +460,6 @@
 					else if(value >=1250 ){
 						return hazardous;
 					}
-				}//no2
-				if(param == "pm10"){
-					if(value <= 54){
-						return good;
-					}
-					else if(value >= 55&& value <=154){
-						return moderate;
-					}
-					else if(value >=155  && value <=254){
-						return unhealthyForSensitve;
-					}
-					else if(value >= 255 && value <= 354){
-						return unhealthy;
-					}
-					else if(value >=355 && value <=424){
-						return veryUnhealthy;
-					}
-					else if(value >= 425){
-						return hazardous;
-					}
-				}//no2
+				}
 				return null;
 			}

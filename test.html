@@ -25,11 +25,10 @@
 	<body>
 		<!-- navigation panel -->
 	   <div class ="container">
-			<div class ="row" style = "background: red;">
-				<div class ="six columns" style = "background: yellow; float: left;   ">
+			<div class ="row" style = "background: #bfb7b8;">
+				<div class ="six columns" style = "background: grey; float: left;   ">
 					<div id="navigation">
 						<ul class="navigation">
-							<li class="navigation"> <a class="navigation" href="" target="_self"> Air Quality Map </a> </li>
 							<li class="navigation"> <a class="navigation" href="" target="_self"> About the Project </a> </li>
 						</ul>
 					</div>
@@ -37,7 +36,7 @@
 					<h1 id="header"> Air Quality Map </h1>
 
 
-					<div id="fullscreen" style="background-color: white; width: 100%;">
+					<div>
 						<!-- input box -->
 						<div id="inputbox">
 							<p>
@@ -45,27 +44,28 @@
 								<br>
 								Longitude: <input v-model="longitude">
 								<br>
-								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng"> Change Coordinates </button>
+								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLatLng"> Change Coordinates </button>
 							</p>
 							<p>
 								Location:
 								<input v-model="location">
 
-								<button style="background-color: #197519; color: white;" v-on:click="changeLoc"> Change Location </button>
+								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLoc"> Change Location </button>
 								<br>
 							</p>
 							<p>
 								Filter By Particle:
 								<select v-model="filter">
 								<option value="none"> All Particles </option>
-								<option value="pm25"> pm25 </option>
-								<option value="pm10"> pm10 </option>
-								<option value="co"> co </option>
-								<option value="so2"> so2 </option>
-								<option value="o3"> o3 </option>
+								<option value="o3"> Ozone </option>								
+								<option value="pm2.5"> PM2.5 </option>
+								<option value="pm10"> PM10 </option>
+								<option value="co"> CO </option>
+								<option value="NO2"> NO2 </option>
+								<option value="SO2"> SO2 </option>
 								</select>
 
-								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng"> Filter </button>
+								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLatLng"> Filter </button>
 							</p>
 						</div>
 						<div id="map"> </div>
@@ -75,24 +75,25 @@
 						</br>
 						<!-- legend -->
 						<div id="under">
-							<h3 style="margin: 5px;">Table Color Legend</h3>
 							<table id="legend">
 								<tr>
-									<td><span style="background-color:rgb(0,288,0)">____</span></td>
+									<td><span style="background-color:#00ff04">____</span></td>
 									<td>Good</td>
-									<td><span style="background-color:rgb(255,255,0)">____</span></td>
+									<td><span style="background-color:#eeff00">____</span></td>
 									<td>Moderate</td>
-									<td><span style="background-color:rgb(255,126,0)">____</span></td>
+									<td><span style="background-color:#ffc700">____</span></td>
 									<td>Unhealty for Sensitive Groups</td>
-									<td><span style="background-color:rgb(255,0,0)">____</span></td>
+									<td><span style="background-color:#ff002e">____</span></td>
 									<td>Unhealthy</td>
-									<td><span style="background-color:rgb(126,0,35)">____</span></td>
+									<td><span style="background-color:#9800ff">____</span></td>
+									<td>Very Unhealthy</td>									
+									<td><span style="background-color:#8c0046">____</span></td>
 									<td>Hazardous</td>
 								</tr>
 							</table>
 						</div>
 						<!-- table -->
-						<h1 id="tableheader"> Air Quality Measurements </h1>
+						<h2 id="tableheader"> Air Quality Measurements </h1>
 						</br>
 						<div id="table">
 							<table id="results" align="center">
@@ -108,7 +109,7 @@
 					</div>
 				</div>
 
-				<div class ="six columns" style = "background: green; float: left; ">
+				<div class ="six columns" style = "background: grey; float: left; ">
 					<!-- page header -->
 					<h1 id="header2"> Air Quality Map </h1>
 
@@ -121,27 +122,28 @@
 								<br>
 								Longitude: <input v-model="longitude2">
 								<br>
-								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng2"> Change Coordinates </button>
+								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLatLng2"> Change Coordinates </button>
 							</p>
 							<p>
 								Location:
 								<input v-model="location2">
 
-								<button style="background-color: #197519; color: white;" v-on:click="changeLoc2"> Change Location </button>
+								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLoc2"> Change Location </button>
 								<br>
 							</p>
 							<p>
 								Filter By Particle:
 								<select v-model="filter2">
 								<option value="none"> All Particles </option>
-								<option value="pm25"> pm25 </option>
-								<option value="pm10"> pm10 </option>
-								<option value="co"> co </option>
-								<option value="so2"> so2 </option>
-								<option value="o3"> o3 </option>
+								<option value="o3"> Ozone </option>								
+								<option value="pm2.5"> PM2.5 </option>
+								<option value="pm10"> PM10 </option>
+								<option value="co"> CO </option>
+								<option value="NO2"> NO2 </option>
+								<option value="SO2"> SO2 </option>
 								</select>
 
-								<button style="background-color: #197519; color: white;" v-on:click="changeLatLng2"> Filter </button>
+								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLatLng2"> Filter </button>
 							</p>
 						</div>
 						<div id="map2"> </div>
@@ -150,18 +152,19 @@
 						</br>
 						<!-- legend -->
 						<div id="under2">
-							<h3 style="margin: 5px;">Table Color Legend</h3>
 							<table id="legend2">
 								<tr>
-									<td><span style="background-color:rgb(0,288,0)">____</span></td>
+									<td><span style="background-color:#00ff04">____</span></td>
 									<td>Good</td>
-									<td><span style="background-color:rgb(255,255,0)">____</span></td>
+									<td><span style="background-color:#eeff00">____</span></td>
 									<td>Moderate</td>
-									<td><span style="background-color:rgb(255,126,0)">____</span></td>
+									<td><span style="background-color:#ffc700">____</span></td>
 									<td>Unhealty for Sensitive Groups</td>
-									<td><span style="background-color:rgb(255,0,0)">____</span></td>
+									<td><span style="background-color:#ff002e">____</span></td>
 									<td>Unhealthy</td>
-									<td><span style="background-color:rgb(126,0,35)">____</span></td>
+									<td><span style="background-color:#9800ff">____</span></td>
+									<td>Very Unhealthy</td>									
+									<td><span style="background-color:#8c0046">____</span></td>
 									<td>Hazardous</td>
 								</tr>
 							</table>
