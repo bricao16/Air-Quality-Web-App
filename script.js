@@ -44,19 +44,15 @@
 					},
 					changeLoc: function () {
 						var request = {
-							//this url needs to be updated, it's currently just going to the same place as the input box for latlng
-							url: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + inputbox.latitude + "&lon=" + inputbox.longitude,
+							url: "https://nominatim.openstreetmap.org/search?q=" + inputbox.location + "&format=json&accept-language=en",
 							dataType: "json",
 							success: locationData
 						};
 						$.ajax(request);
 						function locationData (data)
 						{
-							console.log(data.display_name.substr(0, data.display_name.indexOf(',')));
-							this.latitude = data.lat;
-							this.longitude = data.lon;
-							console.log(this.latitude);
-							console.log(this.longitude);
+							this.latitude = data[0].lat;
+							this.longitude = data[0].lon;
 							mymap.panTo(new L.LatLng(this.latitude, this.longitude));
 						}
 						this.latlng = false;
@@ -211,16 +207,16 @@
 					},
 					changeLoc2: function () {
 						var request = {
-							url: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + inputbox2.latitude2 + "&lon=" + inputbox2.longitude2,
+							url: "https://nominatim.openstreetmap.org/search?q=" + inputbox2.location2 + "&format=json&accept-language=en",
 							dataType: "json",
 							success: locationData2
 						};
 						$.ajax(request);
 						function locationData2 (data)
 						{
-							this.latitude2 = data[0].lat;
-							this.longitude2 = data[0].lon;
-							mymap2.panTo(new L.LatLng(this.latitude2, this.longitude2));
+							this.latitude = data[0].lat;
+							this.longitude = data[0].lon;
+							mymap2.panTo(new L.LatLng(this.latitude, this.longitude));
 						}
 						this.latlng2 = false;
 					}
@@ -322,7 +318,7 @@
 
 			//this function is passed the fetched data from openaq and then loops through the measurment locations examining their lat & lon coordinates
 			function locations2(data){
-
+	
 				var locationLat2;
 				var locationLon2;
 
@@ -364,7 +360,7 @@
 					else if(value >=.207){
 						return hazardous;
 					}
-				}//o3
+				}//o3			
 				if(param == "pm25"){
 					if(value <= 12.0){
 						return good;
