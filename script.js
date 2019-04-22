@@ -166,9 +166,7 @@
 				for(var i = 0; i < data.results.length; i++){
 					locationLat = data.results[i].coordinates.latitude;//get lattitude of location[i]
 					locationLon = data.results[i].coordinates.longitude;//get longitude of location[i]
-					var c = data.results[i].measurements[0];
-					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap).bindPopup("<b>Particle Measurement Averages:</b>" + data.results[i].measurements[0].value + "<br/>");
-					console.log(data.results[i].measurements[0].value);
+					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap).bindPopup("<b>Particle Measurement Averages:</b><br/>" + data.results[i].measurements[0].parameter + ": " + data.results[i].measurements[0].value);
 					marker;
 				let clicked = false
 
@@ -341,8 +339,22 @@
 				for(var i = 0; i < data.results.length; i++){
 					locationLat2 = data.results[i].coordinates.latitude;//get lattitude of location[i]
 					locationLon2 = data.results[i].coordinates.longitude;//get longitude of location[i]
-					var marker2 = L.marker(new L.LatLng(locationLat2, locationLon2)).addTo(mymap2);
+					var marker2 = L.marker(new L.LatLng(locationLat2, locationLon2)).addTo(mymap2).bindPopup("<b>Particle Measurement Averages:</b><br/>" + data.results[i].measurements[0].parameter + ": " + data.results[i].measurements[0].value);
 					marker2;
+					let clicked = false
+
+					marker2.on({
+						mouseover: function() {
+							if(!clicked) {
+								this.openPopup()
+							}
+						},
+						mouseout: function() {
+							if(!clicked) {
+								this.closePopup()
+							}
+						},
+					})
 				}
 			}
 
