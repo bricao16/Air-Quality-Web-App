@@ -166,8 +166,24 @@
 				for(var i = 0; i < data.results.length; i++){
 					locationLat = data.results[i].coordinates.latitude;//get lattitude of location[i]
 					locationLon = data.results[i].coordinates.longitude;//get longitude of location[i]
-					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap);
+					var c = data.results[i].measurements[0];
+					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap).bindPopup("<b>Particle Measurement Averages:</b>" + data.results[i].measurements[0] + "<br/>");
+					console.log(data.results[i].measurements[0].value);
 					marker;
+				let clicked = false
+
+				marker.on({
+					mouseover: function() {
+						if(!clicked) {
+							this.openPopup()
+						}
+					},
+					mouseout: function() {
+						if(!clicked) {
+							this.closePopup()
+						}
+					},
+				})
 				}//results loop
 			}
 
@@ -318,7 +334,7 @@
 
 			//this function is passed the fetched data from openaq and then loops through the measurment locations examining their lat & lon coordinates
 			function locations2(data){
-	
+
 				var locationLat2;
 				var locationLon2;
 
@@ -360,7 +376,7 @@
 					else if(value >=.207){
 						return hazardous;
 					}
-				}//o3			
+				}//o3
 				if(param == "pm25"){
 					if(value <= 12.0){
 						return good;
