@@ -167,7 +167,7 @@
 					locationLat = data.results[i].coordinates.latitude;//get lattitude of location[i]
 					locationLon = data.results[i].coordinates.longitude;//get longitude of location[i]
 					var c = data.results[i].measurements[0];
-					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap).bindPopup("<b>Particle Measurement Averages:</b>" + data.results[i].measurements[0] + "<br/>");
+					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap).bindPopup("<b>Particle Measurement Averages:</b>" + data.results[i].measurements[0].value + "<br/>");
 					console.log(data.results[i].measurements[0].value);
 					marker;
 				let clicked = false
