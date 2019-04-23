@@ -1,7 +1,7 @@
 /* Multiple Pages */
 html {
 	font-size: 100%;
-	background-color: #5e595a;
+	background-color: #5ec9ba;
 }
 
 /* navigation panel */
@@ -13,7 +13,7 @@ html {
 
 /* navigation components */
 .navigation {
-	background-color: #5cb3f2;
+	background-color: #acb3a2;
 	display: inline;
 	text-align: center;
 	color: white;
@@ -26,7 +26,7 @@ html {
 #header {
 	font-size: 3rem;
 	color: white;
-	background-color: #12498c;
+	background-color: #F2E98c;
 	text-align: center;
 	padding: 30px;
 	margin: 0px;
@@ -54,7 +54,7 @@ button {
 #tableheader {
 	font-size: 2rem;
 	color: white;
-	background-color: #332b4f;
+	background-color: #32224F;
 	text-align: left;
 	padding-top: 5px;
 	margin: 0px;
@@ -105,7 +105,7 @@ html {
 
 /* navigation components */
 .navigation2 {
-	background-color: #197519;
+	background-color: #F975A9;
 	display: inline;
 	text-align: center;
 	color: white;
@@ -118,7 +118,7 @@ html {
 #header2 {
 	font-size: 3rem;
 	color: white;
-	background-color: #12498c;
+	background-color: #12C98c;
 	text-align: center;
 	padding: 30px;
 	margin: 0px;
@@ -146,7 +146,7 @@ button2 {
 #tableheader2 {
 	font-size: 2rem;
 	color: white;
-	background-color: #332b4f;
+	background-color: #32224F;
 	text-align: left;
 	padding-top: 5px;
 	margin: 0px;
@@ -162,7 +162,7 @@ button2 {
 #inputbox2 {
 	text-align: left;
 	font-size: 150%;
-	background-color:#bfb7b8;
+	background-color:#bAb7b2;
 }
 
 /* map */
