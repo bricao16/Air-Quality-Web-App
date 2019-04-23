@@ -162,11 +162,17 @@
 
 				var locationLat;
 				var locationLon;
-
+				var str = "";
 				for(var i = 0; i < data.results.length; i++){
 					locationLat = data.results[i].coordinates.latitude;//get lattitude of location[i]
 					locationLon = data.results[i].coordinates.longitude;//get longitude of location[i]
-					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap).bindPopup("<b>Particle Measurement Averages:</b><br/>" + data.results[i].measurements[0].parameter + ": " + data.results[i].measurements[0].value);
+					for(var j = 0; j < data.results[i].measurements.length; j++)
+					{
+						str = str + data.results[i].measurements[j].parameter + ": ";
+						str = str + data.results[i].measurements[j].value + " ";
+						str = str + data.results[i].measurements[j].unit + "\n";
+					}
+					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap).bindPopup("<b>Particle Measurement Averages:</b><br/>" + str);
 					marker;
 				let clicked = false
 
@@ -335,11 +341,18 @@
 
 				var locationLat2;
 				var locationLon2;
-
+				var str2 = "";
 				for(var i = 0; i < data.results.length; i++){
 					locationLat2 = data.results[i].coordinates.latitude;//get lattitude of location[i]
 					locationLon2 = data.results[i].coordinates.longitude;//get longitude of location[i]
-					var marker2 = L.marker(new L.LatLng(locationLat2, locationLon2)).addTo(mymap2).bindPopup("<b>Particle Measurement Averages:</b><br/>" + data.results[i].measurements[0].parameter + ": " + data.results[i].measurements[0].value);
+					//build string
+					for(var j = 0; j < data.results[i].measurements.length; j++)
+					{
+						str2 = str2 + data.results[i].measurements[j].parameter + ": ";
+						str2 = str2 + data.results[i].measurements[j].value + " ";
+						str2 = str2 + data.results[i].measurements[j].unit + "\n";
+					}
+					var marker2 = L.marker(new L.LatLng(locationLat2, locationLon2)).addTo(mymap2).bindPopup("<b>Particle Measurement Averages:</b><br/>" + str2);
 					marker2;
 					let clicked = false
 
