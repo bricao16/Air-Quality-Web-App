@@ -28,15 +28,15 @@
 			<div class ="row" style = "background: #bfb7b8;">
 				<div class ="six columns" style = "background: grey; float: left;   ">
 					<div id="navigation">
-						<ul class="navigation">
-							<li class="navigation"> <a class="navigation" href="" target="_self"> About the Project </a> </li>
+						<ul class="proj">
+							<li class="proj"> <a class="proj" href="" target="_self"> About the Project </a> </li>
 						</ul>
 					</div>
 					<!-- page header -->
 					<h1 id="header"> Air Quality Map </h1>
 
 
-					<div>
+					<div id="fullscreen" style="background-color: lightgrey; width: 100%;">
 						<!-- input box -->
 						<div id="inputbox">
 							<p>
@@ -44,13 +44,13 @@
 								<br>
 								Longitude: <input v-model="longitude">
 								<br>
-								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLatLng"> Change Coordinates </button>
+								<button style="background-color: #32224F; color: white;" v-on:click="changeLatLng"> Change Coordinates </button>
 							</p>
 							<p>
 								Location:
 								<input v-model="location">
 
-								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLoc"> Change Location </button>
+								<button style="background-color: #32224F; color: white;" v-on:click="changeLoc"> Change Location </button>
 								<br>
 							</p>
 							<p>
@@ -65,10 +65,12 @@
 								<option value="SO2"> SO2 </option>
 								</select>
 
-								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLatLng"> Filter </button>
+								<button style="background-color: #32224F; color: white;" v-on:click="changeLatLng"> Filter </button>
 							</p>
 						</div>
 						<div id="map"> </div>
+						<button id="open" style="background-color: #32224F; color: white;" onclick="openFullscreen()"> Click for Fullscreen </button>
+						<button id="close" style="background-color: #32224F; color: white; visibility: hidden;" onclick="closeFullscreen();"> Click for Regular Screen </button>
 
 					</div>
 					<div id="table1">
@@ -82,7 +84,7 @@
 									<td><span style="background-color:#eeff00">____</span></td>
 									<td>Moderate</td>
 									<td><span style="background-color:#ffc700">____</span></td>
-									<td>Unhealty for Sensitive Groups</td>
+									<td>Unhealthy for Sensitive Groups</td>
 									<td><span style="background-color:#ff002e">____</span></td>
 									<td>Unhealthy</td>
 									<td><span style="background-color:#9800ff">____</span></td>
@@ -114,7 +116,7 @@
 					<h1 id="header2"> Air Quality Map </h1>
 
 
-					<div >
+					<div id="fullscreen2" style="background-color: lightgrey; width: 100%;">
 						<!-- input box -->
 						<div id="inputbox2">
 							<p>
@@ -122,13 +124,13 @@
 								<br>
 								Longitude: <input v-model="longitude2">
 								<br>
-								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLatLng2"> Change Coordinates </button>
+								<button style="background-color: #32224F; color: white;" v-on:click="changeLatLng2"> Change Coordinates </button>
 							</p>
 							<p>
 								Location:
 								<input v-model="location2">
 
-								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLoc2"> Change Location </button>
+								<button style="background-color: #32224F; color: white;" v-on:click="changeLoc2"> Change Location </button>
 								<br>
 							</p>
 							<p>
@@ -143,10 +145,12 @@
 								<option value="SO2"> SO2 </option>
 								</select>
 
-								<button style="background-color: #7d5cf2; color: white;" v-on:click="changeLatLng2"> Filter </button>
+								<button style="background-color: #32224F; color: white;" v-on:click="changeLatLng2"> Filter </button>
 							</p>
 						</div>
 						<div id="map2"> </div>
+						<button id="open2" style="background-color: #32224F; color: white;" onclick="openFullscreen2()"> Click for Fullscreen </button>
+						<button id="close2" style="background-color: #32224F; color: white; visibility: hidden;" onclick="closeFullscreen2();"> Click for Regular Screen </button>
 					</div>
 					<div id="table2">
 						</br>

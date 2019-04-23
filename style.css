@@ -22,6 +22,16 @@ html {
     text-decoration: none;
 }
 
+.proj {
+	background-color: #047Ac3;
+	display: inline;
+	text-align: center;
+	color: white;
+	margin: 0 auto;
+	padding: 12px;
+    text-decoration: none;
+}
+
 /* page header */
 #header {
 	font-size: 3rem;

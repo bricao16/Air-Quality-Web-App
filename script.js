@@ -372,7 +372,43 @@
 					})
 				}
 			}
-
+			//fullscreen functions
+			var elem2 = document.getElementById("fullscreen2");
+			var open2 = document.getElementById("open2");
+			var close2 = document.getElementById("close2");
+			function openFullscreen2() {
+				var map2 = document.getElementById("map2");
+				map2.style.width = '100%';
+				map2.style.height = '725px';
+				map2.style.margin = 'auto';
+				var input2 = document.getElementById("inputbox2");
+				input2.style.margin = '50px';
+				if (elem2.requestFullscreen) {
+					elem2.requestFullscreen();
+				}
+				else if (elem2.webkitRequestFullscreen) {
+					elem2.webkitRequestFullscreen();
+				}
+				open2.style.visibility = 'hidden';
+				close2.style.visibility = 'visible';
+				close2.style.float = 'left';
+			}
+			function closeFullscreen2() {
+				var map2 = document.getElementById("map2");
+				map2.style.width = '60%';
+				map2.style.height = '540px';
+				var input2 = document.getElementById("inputbox2");
+				input2.style.margin = '0px';
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				}
+				else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+				}
+				open2.style.visibility = 'visible';
+				close2.style.visibility = 'hidden';
+				open2.style.float = 'left';
+			}
 			//color the table
 			function colorize(param, value){
 				//will get passed parameter and value returns span tag used in colorizing
