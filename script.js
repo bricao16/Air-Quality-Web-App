@@ -372,6 +372,42 @@
 					})
 				}
 			}
+			var elem = document.getElementById("fullscreen");
+			var open = document.getElementById("open");
+			var close = document.getElementById("close");
+			function openFullscreen() {
+				var map = document.getElementById("map");
+				map.style.width = '100%';
+				map.style.height = '725px';
+				map.style.margin = 'auto';
+				var input = document.getElementById("inputbox");
+				input.style.margin = '50px';
+				if (elem.requestFullscreen) {
+					elem.requestFullscreen();
+				}
+				else if (elem.webkitRequestFullscreen) {
+					elem.webkitRequestFullscreen();
+				}
+				open.style.visibility = 'hidden';
+				close.style.visibility = 'visible';
+				close.style.float = 'left';
+			}
+			function closeFullscreen() {
+				var map = document.getElementById("map");
+				map.style.width = '60%';
+				map.style.height = '540px';
+				var input = document.getElementById("inputbox");
+				input.style.margin = '0px';
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				}
+				else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+				}
+				open.style.visibility = 'visible';
+				close.style.visibility = 'hidden';
+				open.style.float = 'left';
+			}
 			//fullscreen functions
 			var elem2 = document.getElementById("fullscreen2");
 			var open2 = document.getElementById("open2");
