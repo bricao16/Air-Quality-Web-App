@@ -170,7 +170,7 @@
 					{
 						str = str + data.results[i].measurements[j].parameter + ": ";
 						str = str + data.results[i].measurements[j].value + " ";
-						str = str + data.results[i].measurements[j].unit + "\n";
+						str = str + data.results[i].measurements[j].unit + "<br/>";
 					}
 					var marker = L.marker(new L.LatLng(locationLat, locationLon)).addTo(mymap).bindPopup("<b>Particle Measurement Averages:</b><br/>" + str);
 					str = "";
