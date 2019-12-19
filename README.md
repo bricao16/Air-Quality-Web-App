@@ -1,1 +1,1 @@
-# Air-Quality-Web-App
+A single page application about air quality. 2 external APIs (Leaflet and Open AQ Platform) were used to retrieve data. The application is interactive, responsive, and allows a user to investigate air quality from various geographical regions. This project also incorporates Vue JS as a framework to make building the app simpler. 
